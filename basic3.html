@@ -1,0 +1,63 @@
+
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+		<style type="text/css">
+		@media screen and (min-width: 1px) and (max-width: 767px){
+		  #columns[data-columns]::before {
+		    content: '2 .col-xs-6';
+		  }
+		}
+		@media screen and (min-width:768px) and (max-width: 991px){
+		  #columns[data-columns]::before {
+		    content: '3 .col-sm-4';
+		  }
+		}
+		@media screen and (min-width:992px) and (max-width: 9999px){
+		  #columns[data-columns]::before {
+		    content: '4 .col-md-3';
+		  }
+		}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+		  <h1 class="col-xs-12">Books by Ernest Hemingway</h1>
+		  <div id="columns" data-columns>
+
+		  </div>
+		</div>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script src="bower_components/salvattore/dist/salvattore.js"></script>
+		<script>
+		function append(title, content){
+		  var grid = document.querySelector('#columns');
+		  var item = document.createElement('div');
+		  var h = '<div class="panel panel-primary">';
+		      h += '<div class="panel-heading">';
+		      h += title;
+		      h += '</div>';
+		      h += '<div class="panel-body">';
+		      h += content;
+		      h += '</div>';
+		      h += '</div>';
+		  salvattore['append_elements'](grid, [item]);
+		  item.outerHTML = h;
+		}
+
+		append('book1', '<div class="thumbnail"><img class="first-slide" src="images/_s1.jpg" alt="First slide" ></div>');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+		append('book1','Discusses the writing of A farewell to arms by Ernest Hemingway. Includes critical essays on the work and a brief biography of the author.');
+
+
+		</script>
+	</body>
+</html>
