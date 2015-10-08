@@ -1,3 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^(www.)?kradarnpra.com$
-RewriteRule ^(/)?$ v1 [L]
