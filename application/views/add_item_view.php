@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<base href="<?php echo base_url() ?>">
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,6 +34,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				height: auto;
 				max-width: 100%;
 				max-height: 90%;
+			}
+			.error{
+				color:red;
+				font-weight: bold;
+				display: inline-block
 			}
 
 		</style>
@@ -81,17 +87,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</nav>
 
 		<div class="container" style="margin-top: 100px;">
-
-			<form>
+		<?php echo form_open('item/add'); ?>
 				
 			  <div class="form-group">
-			    <label for="itemGroup">ประเภท</label>
-			    <input type="text" class="form-control" id="itemGroup"/>
+			    <label for="itemGroup">ประเภท<?php echo form_error('itemGroup'); ?></label>
+			    <input type="text" class="form-control" id="itemGroup" name="itemGroup" value="<?php echo set_value('itemGroup'); ?>"/>
 			  </div>	
 				
 			  <div class="form-group">
+			  	<label for="closeDate">วันที่ปิดประมูล</label>
 			  	<div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control" id="closeDate" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -101,12 +107,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  
 			  <div class="form-group">
 			    <label for="itemClosePrice">ราคาปิดประมูล</label>
-			    <input type="number" class="form-control" id="itemClosePrice" placeholder="บาท" min="0">
+			    <?php echo form_error('itemClosePrice'); ?>
+			    <input type="number" class="form-control" id="itemClosePrice" name="itemClosePrice" placeholder="บาท" min="0">
 			  </div>
 			  <div class="form-group">
 			    <label for="itemClosePrice">link</label>
 			    <input type="text" class="form-control" id="itemLink" placeholder="ลิ้งค์รายการประมูล">
 			  </div>
+			  
 			  <div class="form-group">
 			    <label for="itemSellerId">สมาชิกผู้เปิดประมูล</label>
 			    <input type="text" class="form-control" id="itemSellerId" placeholder="รหัสสมาชิก">
@@ -132,16 +140,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
 		
 		<script>
-		var dataText;
 		$(function() {
-			dataText = <?php echo $item_types; ?>;
+			var types_json = <?php echo $item_types; ?>;
+			var members_json = <?php echo $members; ?>;
 			
 			 $('#itemGroup').magicSuggest({
 			 	allowDuplicates:false,
 			 	allowFreeEntries:false,
 			 	maxSelection :1,
 				placeholder: 'ประเภทวัตถุมงคล',
-		        data: dataText,
+		        data: types_json,
 		        valueField: 'id',
 		        displayField: 'type_name',
 		        renderer: function(data){
@@ -150,6 +158,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		        resultAsString: true    
             		
     		 });
+    		 
+    		 $('#itemSellerId').magicSuggest({
+			 	allowDuplicates:false,
+			 	allowFreeEntries:false,
+			 	maxSelection :1,
+				placeholder: 'รหัสสมาชิก หรือ ชื่อเฟส',
+		        data: members_json,
+		        valueField: 'member_num',
+		        displayField: 'facebook_name',
+		        renderer: function(data){
+		            return data.member_num + ' (<b>' + data.facebook_name + '</b>)';
+		        },
+		        resultAsString: true    
+            		
+    		 });
+    		 
 			 $('#datetimepicker1').datetimepicker({
 			 	format:'DD/MM/YYYY',
 			 	locale:'th'

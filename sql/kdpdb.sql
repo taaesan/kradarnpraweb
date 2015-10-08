@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 08, 2015 at 01:51 AM
+-- Generation Time: Oct 08, 2015 at 06:53 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -30,15 +30,37 @@ CREATE TABLE IF NOT EXISTS `tb_group` (
   `id` int(11) NOT NULL,
   `group_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `group_desc` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `group_link` varchar(200) COLLATE utf8_unicode_ci NOT NULL
+  `group_link` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `member_prefix` varchar(10) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tb_group`
 --
 
-INSERT INTO `tb_group` (`id`, `group_name`, `group_desc`, `group_link`) VALUES
-(1, 'ศิษย์หลวงปู่นาม วัดน้อยชมภู่', 'ศิษย์หลวงปู่นาม วัดน้อยชมภู่', 'https://www.facebook.com/groups/sitluangpoonham/');
+INSERT INTO `tb_group` (`id`, `group_name`, `group_desc`, `group_link`, `member_prefix`) VALUES
+(1, 'ศิษย์หลวงปู่นาม วัดน้อยชมภู่', 'ศิษย์หลวงปู่นาม วัดน้อยชมภู่', 'https://www.facebook.com/groups/sitluangpoonham/', 'N');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_group_member_mapping`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_group_member_mapping` (
+  `id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `member_num` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_group_member_mapping`
+--
+
+INSERT INTO `tb_group_member_mapping` (`id`, `group_id`, `member_id`, `member_num`) VALUES
+(1, 1, 1, 2),
+(2, 1, 2, 9);
 
 -- --------------------------------------------------------
 
@@ -73,7 +95,7 @@ INSERT INTO `tb_item` (`id`, `item_date`, `item_link`, `item_close_price`, `item
 
 CREATE TABLE IF NOT EXISTS `tb_item_type` (
   `id` int(11) NOT NULL,
-  `item_type_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `type_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `item_type_desc` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -82,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `tb_item_type` (
 -- Dumping data for table `tb_item_type`
 --
 
-INSERT INTO `tb_item_type` (`id`, `item_type_name`, `item_type_desc`, `group_id`) VALUES
+INSERT INTO `tb_item_type` (`id`, `type_name`, `item_type_desc`, `group_id`) VALUES
 (1, 'เหรียญสมปรารถนา เนื้อทองแดง', 'เหรียญสมปรารถนา เนื้อทองแดง', 1),
 (2, 'เหรียญสมปรารถนา เนื้อทองเหลือง', 'เหรียญสมปรารถนา เนื้อทองเหลือง', 1),
 (3, 'เหรียญสมปรารถนา เนื้อนวะ', 'เหรียญสมปรารถนา เนื้อนวะ', 1),
@@ -91,18 +113,32 @@ INSERT INTO `tb_item_type` (`id`, `item_type_name`, `item_type_desc`, `group_id`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_post`
+-- Table structure for table `tb_member`
 --
 
-CREATE TABLE IF NOT EXISTS `tb_post` (
+CREATE TABLE IF NOT EXISTS `tb_member` (
   `id` int(11) NOT NULL,
-  `title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `content` varchar(3000) COLLATE utf8_unicode_ci NOT NULL,
-  `createdate` datetime NOT NULL,
-  `updatedate` datetime NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `status` varchar(3) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `facebook_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `facebook_url` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `profile_picture` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `surname` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `province_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `phone_number` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `bank_account_number` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `bank_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `id_card` varchar(13) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tb_member`
+--
+
+INSERT INTO `tb_member` (`id`, `facebook_name`, `facebook_url`, `profile_picture`, `name`, `surname`, `gender`, `address`, `province_name`, `phone_number`, `bank_account_number`, `bank_name`, `id_card`) VALUES
+(1, 'Taae Kradarnpra', 'https://www.facebook.com/taae.kradarnpra', '', 'Parnrawee', 'Phumkhem', 'ชาย', '', 'กรุงเทพ', '', '11111111111', 'ธนาคารกรุงเทพ', '3720500031515'),
+(2, 'ตอง บ่อทราย', '', '', 'ตอง', 'บ่อทราย', '', '', '', '', '', '', '11122223344');
 
 -- --------------------------------------------------------
 
@@ -140,6 +176,14 @@ ALTER TABLE `tb_group`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tb_group_member_mapping`
+--
+ALTER TABLE `tb_group_member_mapping`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `member_id` (`member_id`,`group_id`),
+  ADD KEY `group_id` (`group_id`);
+
+--
 -- Indexes for table `tb_item`
 --
 ALTER TABLE `tb_item`
@@ -155,10 +199,11 @@ ALTER TABLE `tb_item_type`
   ADD KEY `group_id` (`group_id`);
 
 --
--- Indexes for table `tb_post`
+-- Indexes for table `tb_member`
 --
-ALTER TABLE `tb_post`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tb_member`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_card` (`id_card`);
 
 --
 -- Indexes for table `tb_tag`
@@ -182,6 +227,11 @@ ALTER TABLE `tb_user`
 ALTER TABLE `tb_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `tb_group_member_mapping`
+--
+ALTER TABLE `tb_group_member_mapping`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `tb_item`
 --
 ALTER TABLE `tb_item`
@@ -192,10 +242,10 @@ ALTER TABLE `tb_item`
 ALTER TABLE `tb_item_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `tb_post`
+-- AUTO_INCREMENT for table `tb_member`
 --
-ALTER TABLE `tb_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tb_member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tb_tag`
 --
@@ -209,6 +259,13 @@ ALTER TABLE `tb_user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `tb_group_member_mapping`
+--
+ALTER TABLE `tb_group_member_mapping`
+  ADD CONSTRAINT `tb_group_member_mapping_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `tb_group` (`id`),
+  ADD CONSTRAINT `tb_group_member_mapping_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `tb_member` (`id`);
 
 --
 -- Constraints for table `tb_item`
