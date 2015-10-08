@@ -19,7 +19,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Bootstrap theme -->
 		<link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 		
-		<link href="magicsuggest/magicsuggest-min.css" rel="stylesheet">
+		<link href="bower_components/magicsuggest/magicsuggest-min.css" rel="stylesheet">
+		
+		<!-- Date picker -->
+	  	<link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+
 		
 		
 		<style>
@@ -85,9 +90,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			  </div>	
 				
 			  <div class="form-group">
-			    <label for="itemDate">วันที่</label>
-			    <input type="date" class="form-control" id="itemDate" placeholder="วันที่">
-			  </div>
+			  	<div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+              </div>
+			  
+			  
 			  <div class="form-group">
 			    <label for="itemClosePrice">ราคาปิดประมูล</label>
 			    <input type="number" class="form-control" id="itemClosePrice" placeholder="บาท" min="0">
@@ -114,7 +125,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- Placed at the end of the document so the pages load faster -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="magicsuggest/magicsuggest-min.js"></script>
+		<script src="bower_components/magicsuggest/magicsuggest-min.js"></script>
+		
+	  <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+	  <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	  <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
 		
 		<script>
 		var dataText;
@@ -128,13 +143,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				placeholder: 'ประเภทวัตถุมงคล',
 		        data: dataText,
 		        valueField: 'id',
-		        displayField: 'name',
+		        displayField: 'type_name',
 		        renderer: function(data){
-		            return data.name + ' (<b>' + data.name + '</b>)';
+		            return data.id + ' (<b>' + data.type_name + '</b>)';
 		        },
 		        resultAsString: true    
             		
     		 });
+			 $('#datetimepicker1').datetimepicker({
+			 	format:'DD/MM/YYYY',
+			 	locale:'th'
+			 });
+    		 
 		});
 		</script>
 		
