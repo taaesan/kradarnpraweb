@@ -21,14 +21,19 @@ class Item extends CI_Controller {
 	public function index()
 	{
 		
+		$this->initForm();
+	}
+	
+	private function initForm(){
 		$this->load->helper(array('form', 'url'));
 		
 		$this->load->model('item_type_model');
 		$this->load->model('member_model');
 		
-		$data['item_types'] = json_encode($this->item_type_model->get_item_types(1), JSON_UNESCAPED_UNICODE);
+		$data['item_types'] = $this->item_type_model->get_item_types(1);
 		$data['members'] = json_encode($this->member_model->get_member_num(1), JSON_UNESCAPED_UNICODE);
 		
+		$this->load->view('header');
 		$this->load->view('add_item_view', $data);
 	}
 	
@@ -46,21 +51,15 @@ class Item extends CI_Controller {
         $this->form_validation->set_rules('itemLink', 'itemLink', 'required');
 		$this->form_validation->set_rules('itemSellerId', 'itemSellerId', 'required');
 		
-		$this->form_validation->set_message('required', '*');
+		$this->form_validation->set_message('required', '***');
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
         if ($this->form_validation->run() == FALSE)
         {
-        	
+        	//redirect('/item/index');
 			//$this->load->helper(array('form', 'url'));
 			
-			$this->load->model('item_type_model');
-			$this->load->model('member_model');
-			
-			$data['item_types'] = json_encode($this->item_type_model->get_item_types(1), JSON_UNESCAPED_UNICODE);
-			$data['members'] = json_encode($this->member_model->get_member_num(1), JSON_UNESCAPED_UNICODE);
-			
-			$this->load->view('add_item_view', $data);
+			$this->initForm();
 			
 			
         }
