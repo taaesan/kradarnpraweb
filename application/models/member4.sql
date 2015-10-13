@@ -1,3 +1,4 @@
+insert into tb_group_member_mapping(group_id, member_id, member_num)
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("10", "Eher mane", "อดิศร", "มณีสุรัตน์", "92448010", "ธนาคารกสิกรไทย", "กรุงเทพมหานคร");
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("11", "din jessada", "เจษฎา", "สินสันเทียะ", "550213169", "ธนาคารกรุงเทพ", "กรุงเทพ");
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("12", "Amulet Ancient Thailand", "ธนัตถ์", "ชุมชู", "015-0-19371-8", "ธนาคารกรุงไทย", "สระบุรี");
@@ -1056,4 +1057,4 @@ insert into tb_member(nid, facebook_name, name, surname, bank_account_number, ba
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("1065", "อาร์ต. วันลภ", "วัลลภ", "วังนุราช", "8482270499", "ธนาคารไทยพาณิชย์ ", "");
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("1066", "เสือสาว สุพรรณบุรี", "วิมล", "รสชเอม", "8312763790", "ธนาคารไทยพาณิชย์ ", "สุพรรณบุรี");
 insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("1067", "กิตติกุล จารุจินดา", "กิตติกุล", "จารุจินดา", "32259679", "ธนาคารกสิกรไทย", "กรุงเทพ");
-insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("1068", "Tanachot Songklao", "ธนโชติ", "ทรงเกล้า", "2172327898", "ธนาคารทหารไทย");
+insert into tb_member(nid, facebook_name, name, surname, bank_account_number, bank_name, province_name)values("1068", "Tanachot Songklao", "ธนโชติ", "ทรงเกล้า", "2172327898", "ธนาคารทหารไทย", "");

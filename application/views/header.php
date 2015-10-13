@@ -55,20 +55,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">กระดานพระ</a>
+					<a class="navbar-brand" href="#">ศิษย์หลวงปู่นาม</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
-							<a href="#">หน้าแรกกลุ่ม</a>
+						<!--
+						<li id="menu1">
+							<a href="#">หน้าแรก</a>
 						</li>
-						<li>
+						
+						<li id="menu2">
 							<a href="#about">วัตถุมงคล</a>
 						</li>
-						<li>
-							<a href="#about">สมาชิกกลุ่ม</a>
+						-->
+						<li id="menu3">
+							<a href="member.html">สมาชิกกลุ่ม</a>
 						</li>
-						<li>
+						<li id="menu4">
 							<a href="#contact">ติดต่อผู้ดูแล</a>
 						</li>
 						

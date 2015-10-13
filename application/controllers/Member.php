@@ -12,6 +12,7 @@ class Member extends CI_Controller {
 
         //load the department_model
         $this->load->model('member_model');
+		
     }
 
 	/**
@@ -31,48 +32,42 @@ class Member extends CI_Controller {
 	 */
 	public function index()
 	{
-		$pageConfig = $this->initPagination(1);
+        $data = $this->buildData(1);
+		
+		$this->load->view('header');
+		$this->load->view('member_main_view', $data);
+	}
+	
+	private function buildData($groupId){
+		
+		$data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		
+		$totalRows = $this->member_model->countMembers($groupId);
+		
+		$searchText = isset($_POST['searchText']) ? $_POST['searchText'] : null;
+		$data['searchText'] = $searchText;
+		
+		$pageConfig = $this->initPagination($totalRows);
 		$this->pagination->initialize($pageConfig);
 		
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-		
-		$data['result'] = $this->member_model->getData(1, $pageConfig['per_page'], $data['page']);
-		$data['config'] = $pageConfig;
-		$data['links'] = $this->pagination->create_links();
+		$data['result'] = $this->member_model->getData($groupId, $searchText, $pageConfig['per_page'], $data['page']);
+		if($searchText == null){
+			$data['links'] = $this->pagination->create_links();
+		}
+		return $data;
+	}
+	
+	public function page(){
+		$data = $this->buildData(1);
 		
 		$this->load->view('header');
 		$this->load->view('member_main_view', $data);
 	}
-	
-	
-	private function initForm($groupId = 1, $page = 1){
-		
 
-	}
-	
-	/*
-	private function initForm($groupId = 1, $page = 1){
-		$this->load->helper(array('form', 'url'));
-		
-		
-		
-		$limit = ( isset( $_GET['limit'] ) ) ? $_GET['limit'] : 10;
-    	$page = ( isset( $_GET['page'] ) ) ? $_GET['page'] : 1;
-    	$links = ( isset( $_GET['links'] ) ) ? $_GET['links'] : 7;
-		$actionUrl = $this->uri->segment(1);
-		
-		$data['result'] = $this->member_model->getData($groupId, 10, $page);
-		$data['links'] = $this->member_model->createLinks($actionUrl, $links, "pagination pagination-sm");
-		
-		$this->load->view('header');
-		$this->load->view('member_main_view', $data);
-	}
-	 * */
-
-	private function initPagination($groupId){
+	private function initPagination($totalRows){
 		//pagination settings
-        $config['base_url'] = 'member/index';
-        $config['total_rows'] = $this->member_model->countMembers($groupId);
+		$config['base_url'] = 'member/page';
+        $config['total_rows'] = $totalRows;
         $config['per_page'] = "10";
         $config['uri_segment'] = 3;
         $choice = $config['total_rows'] / $config['per_page'];

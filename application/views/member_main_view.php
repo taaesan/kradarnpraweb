@@ -1,19 +1,24 @@
 <div class="container" style="margin-top: 100px;">
-	<?php echo form_open('member/search'); ?>
+	<?php echo form_open('member'); ?>
 	<div class="row">
-
+		
 		<div class="col-lg-6">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="ค้นหา สมาชิก...">
+				
+				<input type="text" class="form-control" id="searchText" name="searchText" placeholder="ค้นหา สมาชิก..." value="<?php echo $searchText?>" >
 				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">
-						Go!
-					</button> </span>
+					<button class="btn btn-default" type="submit">
+						ค้นหา
+					</button>
+				</span>
+				
 			</div><!-- /input-group -->
 		</div><!-- /.col-lg-6 -->
+		
 
 	</div>
 	</form>
+	
 	<table class="table table-hover">
 		<caption>
 			สมาชิกแบบมีหมายเลข
@@ -42,7 +47,9 @@
 	
 	 <div class="row">
         <div class="col-md-12 text-center">
-            <?php echo $links;?>
+            <?php if(!empty($links)) { ?>
+            	<?php echo $links;?>
+           	<?php } ?>
         </div>
     </div>
 	
@@ -65,44 +72,8 @@
 <script>
 	$(function() {
 
+		$('#menu3').addClass("active");
 		
-		/*
-
-		 $('#datetimepicker1').datetimepicker({
-		 format : 'DD/MM/YYYY',
-		 locale : 'th'
-		 });
-
-		 $('#itemSellerId').magicSuggest({
-		 allowDuplicates : false,
-		 allowFreeEntries : false,
-		 maxSelection : 1,
-		 placeholder : 'รหัสสมาชิก หรือ ชื่อเฟส',
-		 data : members_json,
-		 valueField : 'member_num',
-		 displayField : 'facebook_name',
-		 renderer : function(data) {
-		 return data.member_num + ' (<b>' + data.facebook_name + '</b>)';
-		 },
-		 resultAsString : true
-
-		 });
-
-		 $('#itemGroup').magicSuggest({
-		 allowDuplicates:false,
-		 allowFreeEntries:false,
-		 maxSelection :1,
-		 placeholder: 'ประเภทวัตถุมงคล',
-		 data: types_json,
-		 valueField: 'id',
-		 displayField: 'type_name',
-		 renderer: function(data){
-		 return data.id + ' (<b>' + data.type_name + '</b>)';
-		 },
-		 resultAsString: true
-
-		 });
-		 */
 
 	}); 
 </script>
