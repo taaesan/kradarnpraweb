@@ -14,7 +14,7 @@ class Member_model extends CI_Model {
 		$this -> load -> database();
 
 		$this -> _query = 
-		  " SELECT TRIM(CONCAT((SELECT MAX(MEMBER_PREFIX) FROM TB_GROUP WHERE ID = ? ), GM.MEMBER_NUM)) MEMBER_NUM, M.FACEBOOK_NAME, M.NAME, M.SURNAME , M.BANK_NAME, M.BANK_ACCOUNT_NUMBER " 
+		  " SELECT TRIM(CONCAT((SELECT MAX(MEMBER_PREFIX) FROM TB_GROUP WHERE ID = ? ), GM.MEMBER_NUM)) MEMBER_NUM, M.FACEBOOK_NAME, M.NAME, M.SURNAME , M.BANK_NAME, M.BANK_ACCOUNT_NUMBER, GM.GROUP_ID " 
 		. " FROM TB_GROUP_MEMBER_MAPPING GM INNER JOIN TB_MEMBER M " 
 		. " ON GM.MEMBER_ID = M.ID WHERE GM.GROUP_ID = ? ";
 
@@ -47,6 +47,18 @@ class Member_model extends CI_Model {
 		//2. Search with LIMIT
 		$query = $this -> db -> query($query, array($groupId, $groupId));
 		return $query -> result_array();
+	}
+	
+	public function getMemberDetail($groupId, $memberId){
+		
+		
+		$query = " SELECT A.*, G.GROUP_NAME FROM( ";
+		$query = $query. $this -> _query;
+		$query = $query. " )A INNER JOIN TB_GROUP G ON A.GROUP_ID = G.ID WHERE A.MEMBER_NUM = ? ";
+		
+		//
+		$query = $this -> db -> query($query, array($groupId, $groupId, strtoupper($memberId) ));
+		return $query -> row();
 	}
 
 	

@@ -1,58 +1,46 @@
 <div class="container" style="margin-top: 100px;">
-	<?php echo form_open('member'); ?>
-	<div class="row">
-		
-		<div class="col-lg-6">
-			<div class="input-group">
-				
-				<input type="text" class="form-control" id="searchText" name="searchText" placeholder="ค้นหา สมาชิก..." value="<?php echo $searchText?>" >
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="submit">
-						ค้นหา
-					</button>
-				</span>
-				
-			</div><!-- /input-group -->
-		</div><!-- /.col-lg-6 -->
-		
-
-	</div>
-	</form>
+	
+	
+	
+	<img src='images/bg01.jpg'>
 	
 	<table class="table table-hover">
 		<caption>
-			สมาชิกแบบมีหมายเลข
+			<?php if(!empty($memberRow)) { ?>
+				<?php echo $memberRow->GROUP_NAME; ?>
+			<?php } ?>
 		</caption>
+		<!--
 		<thead>
 			<th>รหัส</th>
 			<th>ชื่อเฟส</th>
 			<th>ชื่อ นามสกุล</th>
 		</thead>
+		-->
 		<tbody>
 			
-			<?php foreach($result as $item):?>
+			<?php if(!empty($memberRow)) { ?>
 			<tr>
-				<td><a href="member/g/<?php echo $item['GROUP_ID']?>/<?php echo $item['MEMBER_NUM']?>"><?php echo $item['MEMBER_NUM']?></a></td>
-				<td><?php echo $item['FACEBOOK_NAME']?></td>
-				<td><?php echo $item['NAME'].' '.$item['SURNAME']?></td>
+				<td>หมายเลขสมาชิก</td>
+				<td><?php echo $memberRow->MEMBER_NUM; ?></td>
 			</tr>
-			<?php endforeach; ?>
+			<tr>
+				<td>ชื่อเฟสบุ๊ค</td>
+				<td><?php echo $memberRow->FACEBOOK_NAME; ?> </td>
+			</tr>
+			<tr>
+				<td>ชื่อ นามสกุล</td>
+				<td><?php echo $memberRow->NAME; ?> <?php echo $memberRow->SURNAME; ?></td>
+			</tr>
+			<tr>
+				<td>ธนาคาร</td>
+				<td><?php echo $memberRow->BANK_NAME; ?> <?php echo $memberRow->BANK_ACCOUNT_NUMBER; ?></td>
+			</tr>
+			<?php } ?>
 			
 		</tbody>
 	</table>
-	
-	<!--
-		<?php var_dump($config);?>
-	-->
-	
-	 <div class="row">
-        <div class="col-md-12 text-center">
-            <?php if(!empty($links)) { ?>
-            	<?php echo $links;?>
-           	<?php } ?>
-        </div>
-    </div>
-	
+	<a href="member.html">&lt;กลับ</a>
 	
 </div>
 

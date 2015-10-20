@@ -33,9 +33,25 @@ class Member extends CI_Controller {
 	public function index()
 	{
         $data = $this->buildData(1);
-		
 		$this->load->view('header');
 		$this->load->view('member_main_view', $data);
+	}
+	
+	public function g(){
+		
+		$groupId = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
+		$memberId = ($this->uri->segment(4)) ? $this->uri->segment(4) : 1;
+		
+		$data['memberRow'] = $this->member_model->getMemberDetail($groupId, $memberId);
+		
+		if(isset($data['memberRow'])){
+			$this->load->view('header');
+			$this->load->view('member_detail_view', $data);
+		}else{
+			$data = $this->buildData(1);
+			$this->load->view('header');
+			$this->load->view('member_main_view', $data);
+		}
 	}
 	
 	private function buildData($groupId){
