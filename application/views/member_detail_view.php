@@ -1,8 +1,5 @@
-<div class="container" style="margin-top: 100px;">
-	
-	
-	
-	<img src='images/bg01.jpg'>
+<div class="container" style="margin-top: 50px;">
+	<img src='images/bg01.jpg' style="margin-bottom: 10px;">
 	
 	<table class="table table-hover">
 		<caption>

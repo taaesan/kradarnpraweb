@@ -1,4 +1,5 @@
-<div class="container" style="margin-top: 100px;">
+<div class="container" style="margin-top: 50px;">
+	<img src='images/bg01.jpg' style="margin-bottom: 10px;">
 	<?php echo form_open('member'); ?>
 	<div class="row">
 		
@@ -40,10 +41,6 @@
 			
 		</tbody>
 	</table>
-	
-	<!--
-		<?php var_dump($config);?>
-	-->
 	
 	 <div class="row">
         <div class="col-md-12 text-center">
