@@ -160,12 +160,13 @@
 		</select>
 	</div>
 
-	<button type="button" class="btn btn-default" id="submitButton">
+	<button type="button" class="btn btn-lg btn-primary" id="submitButton">
 		ส่งข้อมูล
 	</button>
+	<button type="button" class="btn btn-lg btn-default" id="backButton">ยกเลิก</button>
+	
 	</form>
 
-	<a href="member.html">&lt;กลับ</a>
 
 </div>
 
@@ -197,21 +198,34 @@
 
 			var bankSelect = document.getElementById("bankName");
 			var provinceSelect = document.getElementById("province");
-			if (bankSelect.selectedIndex == 0 || provinceSelect.selectedIndex == 0) {
-				alert('select one bank or one province');
+			if (bankSelect.selectedIndex == 0) {
+				alert('เลือก ธนาคาร ด้วยครับ');
+				bankSelect.focus();
+				return;
+			}
+			
+			if (provinceSelect.selectedIndex == 0) {
+				alert('เลือก จังหวัด ด้วยครับ');
+				provinceSelect.focus();
 				return;
 			}
 
 			var gender1 = document.getElementById("gender1");
 			var gender2 = document.getElementById("gender2");
 			if (!gender1.checked && !gender2.checked) {
-				alert('select gender');
+				alert('กรุณาเลือกเพศของคุณ');
+				gender1.focus();
 				return;
 			}
 			
 
 			document.forms['requestForm'].submit();
 
+		});
+		
+		$("#backButton").click(function() {
+			
+			history.back();
 		});
 
 	}); 
