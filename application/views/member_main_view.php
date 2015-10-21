@@ -32,8 +32,8 @@
 		<tbody>
 			
 			<?php foreach($result as $item):?>
-			<tr>
-				<td><a href="member/g/<?php echo $item['GROUP_ID']?>/<?php echo $item['MEMBER_NUM']?>"><?php echo $item['MEMBER_NUM']?></a></td>
+			<tr class="clickable-row" data-href="member/g/<?php echo $item['GROUP_ID']?>/<?php echo $item['MEMBER_NUM']?>">
+				<td><?php echo $item['MEMBER_NUM']?></td>
 				<td><?php echo $item['FACEBOOK_NAME']?></td>
 				<td><?php echo $item['NAME'].' '.$item['SURNAME']?></td>
 			</tr>
@@ -71,8 +71,17 @@
 
 		$('#menu3').addClass("active");
 		
+		
+		$(".clickable-row").click(function() {
+	        window.document.location = $(this).data("href");
+	    });		
+		
 
 	}); 
+	
+	
+
+	
 </script>
 
 </body>

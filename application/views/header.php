@@ -23,9 +23,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		<!-- Date picker -->
 	  	<link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-
-
-		
 		
 		<style>
 			img {
@@ -72,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<a href="member.html">สมาชิกกลุ่ม</a>
 						</li>
 						<li id="menu4">
-							<a href="#contact">ติดต่อผู้ดูแล</a>
+							<a href="member/request.html">สมัครสมาชิก</a>
 						</li>
 						
 						<!--li>

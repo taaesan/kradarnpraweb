@@ -60,6 +60,17 @@ class Member_model extends CI_Model {
 		$query = $this -> db -> query($query, array($groupId, $groupId, strtoupper($memberId) ));
 		return $query -> row();
 	}
+	
+	public function addMember($columns){
+		$this -> db -> insert('tb_member', $columns);
+		
+		/*
+		INSERT INTO `tb_member`(`id`, `facebook_name`, `facebook_url`, `profile_picture`, `name`, `surname`, `gender`, `address`, `province_name`, `phone_number`, `bank_account_number`, `bank_name`, `nid`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
+		 * 
+		 * 
+		 */ 
+		
+	}	
 
 	
 

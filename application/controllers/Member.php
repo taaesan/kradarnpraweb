@@ -9,32 +9,98 @@ class Member extends CI_Controller {
         $this->load->helper('url');
 		$this->load->helper(array('form', 'url'));
         $this->load->library('pagination');
+		$this->load->library('form_validation');
 
         //load the department_model
         $this->load->model('member_model');
+		$this->load->library('member_dto');
 		
     }
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
         $data = $this->buildData(1);
 		$this->load->view('header');
 		$this->load->view('member_main_view', $data);
+	}
+	
+	public function request()
+	{
+		$this->load->view('header');
+		$this->load->view('member_request_view', null);
+	}	
+	
+	public function submitrequest(){
+		
+        $this->form_validation->set_rules('fbName', 'fbName', 'required');
+        $this->form_validation->set_rules('name', 'name', 'required');
+        $this->form_validation->set_rules('surname', 'surname', 'required');
+        $this->form_validation->set_rules('cid', 'cid', 'required');
+		$this->form_validation->set_rules('birthDate', 'birthDate', 'required');
+		$this->form_validation->set_rules('bankName', 'bankName', 'required');
+		$this->form_validation->set_rules('accountNumber', 'accountNumber', 'required');
+		$this->form_validation->set_rules('phone', 'phone', 'required');
+		$this->form_validation->set_rules('province', 'province', 'required');
+		$this->form_validation->set_rules('address', 'address', 'required');
+		
+		$this->form_validation->set_message('required', '***');
+		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+
+			$this->load->view('header');
+			$this->load->view('member_request_view', null);
+        }
+        else
+        {
+			
+			$facebook_name = $_POST['fbName'];
+			$name = $_POST['name'];
+			$surname = $_POST['surname'];
+			$cid = $_POST['cid'];
+			
+			$genders = $_POST['genders'];
+			$birthDate = $_POST['birthDate'];
+			$bankName = $_POST['bankName'];
+			
+			$accountNumber = $_POST['accountNumber'];
+			$phone = $_POST['phone'];
+			$province = $_POST['province'];
+			$address = $_POST['address'];
+
+			
+			/** Clear the fields before use */
+			$this -> member_dto -> clearFields();
+			//member_dto -> id = $id;
+			$this -> member_dto -> facebook_name = $_POST['fbName'];
+			
+			$this -> member_dto -> facebook_url = '';
+			$this -> member_dto -> profile_picture = '';
+			$this -> member_dto -> nid = '';
+			
+			$this -> member_dto -> name = $_POST['name'];
+			$this -> member_dto -> surname = $_POST['surname'];
+			$this -> member_dto -> gender = $_POST['genders'];
+			$this -> member_dto -> address = $_POST['address'];
+			$this -> member_dto -> province_name = $_POST['province'];
+			$this -> member_dto -> phone_number = $_POST['phone'];
+			$this -> member_dto -> bank_account_number = $_POST['accountNumber'];
+			$this -> member_dto -> bank_name = $_POST['bankName'];
+			
+			
+			$this -> member_dto -> cid = $_POST['cid'];
+			$this -> member_dto -> birth_date = $_POST['birthDate'];
+			
+			$this->member_model-> addMember($this -> member_dto);			
+			
+            redirect('member');
+			
+			//$data['memberDto'] = $this -> member_dto;
+			
+//			$this->load->view('header');
+//			$this->load->view('member_request_view', $data);			
+        }		
 	}
 	
 	public function g(){
