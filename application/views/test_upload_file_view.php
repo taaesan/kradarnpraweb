@@ -3,21 +3,7 @@
 
 	<?php
 	$attributes = array('id' => 'requestForm');
-	if(isset($imageTag)){
-		echo $imageTag;
-	}
-	
-	if(isset($extension)){
-		echo $extension;
-	}
-	
-		if(isset($type)){
-		echo $type;
-	}
-		
-				if(isset($name)){
-		echo $name;
-	}
+
 	?>
 	
 	<form enctype="multipart/form-data" action="member/testupload" method="post">
@@ -58,7 +44,7 @@
 		
 		$("#backButton").click(function() {
 			
-			history.back();
+			location.href = '<?php echo base_url() ?>/member/request/';
 		});
 
 	}); 

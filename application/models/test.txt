@@ -1,0 +1,9 @@
+			<option value="ธนาคารกรุงเทพ" <?php echo set_select('bankName',  'ธนาคารกรุงเทพ', $bankName == 'ธนาคารกรุงเทพ') ?>ธนาคารกรุงเทพ</option>
+			<option value="ธนาคารกรุงไทย" <?php echo set_select('bankName',  'ธนาคารกรุงไทย', $bankName == 'ธนาคารกรุงไทย') ?>ธนาคารกรุงไทย</option>
+			<option value="ธนาคารกรุงศรีอยุธยา" <?php echo set_select('bankName',  'ธนาคารกรุงศรีอยุธยา', $bankName == 'ธนาคารกรุงศรีอยุธยา') ?>ธนาคารกรุงศรีอยุธยา</option>
+			<option value="ธนาคารกสิกรไทย" <?php echo set_select('bankName',  'ธนาคารกสิกรไทย', $bankName == 'ธนาคารกสิกรไทย') ?>ธนาคารกสิกรไทย</option>
+			<option value="ธนาคารไทยพาณิชย์" <?php echo set_select('bankName',  'ธนาคารไทยพาณิชย์', $bankName == 'ธนาคารไทยพาณิชย์') ?>ธนาคารไทยพาณิชย์</option>
+			<option value="ธนาคารทหารไทย" <?php echo set_select('bankName',  'ธนาคารทหารไทย', $bankName == 'ธนาคารทหารไทย') ?>ธนาคารทหารไทย</option>
+			<option value="ธนาคารออมสิน" <?php echo set_select('bankName',  'ธนาคารออมสิน', $bankName == 'ธนาคารออมสิน') ?>ธนาคารออมสิน</option>
+			<option value="ธนาคารธนชาต" <?php echo set_select('bankName',  'ธนาคารธนชาต', $bankName == 'ธนาคารธนชาต') ?>ธนาคารธนชาต</option>
+			<option value="CIMB" <?php echo set_select('bankName',  'CIMB', $bankName == 'CIMB') ?>CIMB</option>

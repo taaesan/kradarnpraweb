@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Member_dto{
-	var $id;
 	var $facebook_name;
 	var $facebook_url;
 	var $profile_picture;
@@ -19,7 +18,6 @@ class Member_dto{
 	var $birth_date;
 	
 	public function clearFields(){
-		$this -> id = null;
 		$this -> facebook_name = null;
 		$this -> facebook_url = null;
 		$this -> profile_picture = null;

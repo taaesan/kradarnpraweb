@@ -23,8 +23,30 @@ class Member extends CI_Controller {
 	}
 
 	public function request() {
+	    
+        $memberId = ($this -> uri -> segment(3)) ? $this -> uri -> segment(3) : 0;
+        
+        $memberRow = $this -> member_model -> getTempMemberById($memberId);
+        
+        if($memberRow != null){
+            $data['id'] = $memberRow -> ID;
+            $data['fbName'] = $memberRow -> FACEBOOK_NAME;
+            $data['name'] = $memberRow -> NAME;
+            $data['surname'] = $memberRow -> SURNAME;
+            $data['cid'] = $memberRow -> CID;
+            $data['birthDate'] = $memberRow -> BIRTH_DATE;
+            $data['bankName'] = $memberRow -> BANK_NAME;
+            $data['accountNumber'] = $memberRow -> BANK_ACCOUNT_NUMBER;
+            $data['phone'] = $memberRow -> PHONE_NUMBER;
+            $data['province'] = $memberRow -> PROVINCE_NAME;
+            $data['address'] = $memberRow -> ADDRESS;
+            $data['gender'] = $memberRow -> GENDER;
+        }else{
+            $data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender'), '');
+        }
+		
 		$this -> load -> view('header');
-		$this -> load -> view('member_request_view', null);
+		$this -> load -> view('member_request_view', $data);
 	}
 
 	public function submitrequest() {
@@ -45,55 +67,58 @@ class Member extends CI_Controller {
 
 		if ($this -> form_validation -> run() == FALSE) {
 
+			$data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender'), '');
+
 			$this -> load -> view('header');
-			$this -> load -> view('member_request_view', null);
+			$this -> load -> view('member_request_view', $data);
 		} else {
 
-			$facebook_name = $_POST['fbName'];
-			$name = $_POST['name'];
-			$surname = $_POST['surname'];
-			$cid = $_POST['cid'];
+            $memberId = $_POST['id'];
+            
+            /** Clear the fields before use */
+            $this -> member_dto -> clearFields();
+            //member_dto -> id = $id;
+            $this -> member_dto -> facebook_name = $_POST['fbName'];
 
-			$genders = $_POST['genders'];
-			$birthDate = $_POST['birthDate'];
-			$bankName = $_POST['bankName'];
+            $this -> member_dto -> facebook_url = '';
+            $this -> member_dto -> profile_picture = '';
+            $this -> member_dto -> nid = '';
 
-			$accountNumber = $_POST['accountNumber'];
-			$phone = $_POST['phone'];
-			$province = $_POST['province'];
-			$address = $_POST['address'];
+            $this -> member_dto -> name = $_POST['name'];
+            $this -> member_dto -> surname = $_POST['surname'];
+            $this -> member_dto -> gender = $_POST['genders'];
+            $this -> member_dto -> address = $_POST['address'];
+            $this -> member_dto -> province_name = $_POST['province'];
+            $this -> member_dto -> phone_number = $_POST['phone'];
+            $this -> member_dto -> bank_account_number = $_POST['accountNumber'];
+            $this -> member_dto -> bank_name = $_POST['bankName'];
 
-			/** Clear the fields before use */
-			$this -> member_dto -> clearFields();
-			//member_dto -> id = $id;
-			$this -> member_dto -> facebook_name = $_POST['fbName'];
+            $this -> member_dto -> cid = $_POST['cid'];
+            $this -> member_dto -> birth_date = $_POST['birthDate'];
+            
+            if(strlen($memberId) == 0){
+    			$memberId = $this -> member_model -> addMember($this -> member_dto);
+            }else{
+                $this -> member_model -> updateMember($memberId, $this -> member_dto);
+            }
+            
+            redirect('member/uploaddoc/'.$memberId);
 
-			$this -> member_dto -> facebook_url = '';
-			$this -> member_dto -> profile_picture = '';
-			$this -> member_dto -> nid = '';
-
-			$this -> member_dto -> name = $_POST['name'];
-			$this -> member_dto -> surname = $_POST['surname'];
-			$this -> member_dto -> gender = $_POST['genders'];
-			$this -> member_dto -> address = $_POST['address'];
-			$this -> member_dto -> province_name = $_POST['province'];
-			$this -> member_dto -> phone_number = $_POST['phone'];
-			$this -> member_dto -> bank_account_number = $_POST['accountNumber'];
-			$this -> member_dto -> bank_name = $_POST['bankName'];
-
-			$this -> member_dto -> cid = $_POST['cid'];
-			$this -> member_dto -> birth_date = $_POST['birthDate'];
-
-			$this -> member_model -> addMember($this -> member_dto);
-
-			redirect('member');
-
-			//$data['memberDto'] = $this -> member_dto;
-
-			//			$this->load->view('header');
-			//			$this->load->view('member_request_view', $data);
 		}
 	}
+
+    public function uploaddoc(){
+        
+        $memberId = ($this -> uri -> segment(3)) ? $this -> uri -> segment(3) : 0;
+        
+        $data['memberRow'] = $this -> member_model -> getTempMemberById($memberId);
+        if($data['memberRow'] != null){
+            $this -> load -> view('header');
+            $this -> load -> view('member_request_doc_view', $data);
+        }else{
+            redirect('member');
+        }
+    }
 
 	public function g() {
 

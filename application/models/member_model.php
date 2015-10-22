@@ -63,13 +63,28 @@ class Member_model extends CI_Model {
 	
 	public function addMember($columns){
 		$this -> db -> insert('tb_member', $columns);
-		
+		return $this->db->insert_id();
 		/*
-		INSERT INTO `tb_member`(`id`, `facebook_name`, `facebook_url`, `profile_picture`, `name`, `surname`, `gender`, `address`, `province_name`, `phone_number`, `bank_account_number`, `bank_name`, `nid`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
+		INSERT INTO tb_member(id, facebook_name, facebook_url, profile_picture, name, surname, gender, address, province_name, phone_number, bank_account_number, bank_name, nid) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
 		 * 
 		 * 
 		 */ 
 		
+	}
+	
+	public function updateMember($id, $columns){
+	    $this -> db -> where('id', $id);
+        $this -> db -> update('tb_member', $columns);
+    }
+	
+	public function getTempMemberById($memberId){
+		
+        $query = " SELECT ID, FACEBOOK_NAME, FACEBOOK_URL, PROFILE_PICTURE, NAME, SURNAME, GENDER, ADDRESS, PROVINCE_NAME, PHONE_NUMBER, BANK_ACCOUNT_NUMBER, BANK_NAME, NID, CID, BIRTH_DATE"
+        ." FROM TB_MEMBER "
+        ." WHERE ID = ? ";
+		
+		$result = $this -> db -> query($query, array($memberId));
+		return $result -> row();
 	}	
 
 	
