@@ -1,5 +1,6 @@
 <div class="container" style="margin-top: 50px;">
-	<img src='images/bg01.jpg' style="margin-bottom: 10px;">
+	<!-- imgHeader -->
+    <img src='images/bg01.jpg' id="imgHeader">
 	
 	<table class="table table-hover">
 		<caption>

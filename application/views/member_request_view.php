@@ -1,5 +1,6 @@
 <div class="container" style="margin-top: 50px;">
-	<img src='images/bg01.jpg' style="margin-bottom: 10px;">
+    <!-- imgHeader -->
+    <img src='images/bg01.jpg' id="imgHeader">
 
 	<ul class="nav nav-pills">
 	  <li role="presentation" class="active"><a href="#" onclick="return false;">1. ข้อมูลสมาชิก</a></li>
@@ -173,7 +174,17 @@
 	
 	</form>
 
-
+<!-- Footer -->
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="nav nav-pills nav-justified">
+            <li><a href="/">กระดานพระ</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy</a></li>
+        </ul>
+    </div>
+</div>  
 </div>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->

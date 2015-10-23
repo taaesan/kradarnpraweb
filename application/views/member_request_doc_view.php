@@ -1,24 +1,56 @@
 <div class="container" style="margin-top: 50px;">
-	<img src='images/bg01.jpg' style="margin-bottom: 10px;">
+    <!-- imgHeader -->
+	<img src='images/bg01.jpg' id="imgHeader">
 
 	<ul class="nav nav-pills">
-	  <li role="presentation"><a href="<?php echo base_url().'/member/request/'.$memberRow->ID ?>">1. ข้อมูลสมาชิก</a></li>
-	  <li role="presentation" class="active"><a href="#" onclick="return false;">2. อัพโหลดเอกสาร</a></li>
+	  <li role="presentation"><a href="<?php echo base_url().'member/request/'.$memberRow->ID ?>">1. ข้อมูลสมาชิก</a></li>
+	  <li role="presentation" class="active"><a href="#" onclick="return false;">2. ส่งเอกสาร และ ตรวจสอบข้อมูล</a></li>
 	</ul>
 	
 	<input type="hidden" name="id" id="id" value="<?php if(!empty($memberRow)) {echo $memberRow->ID;} ?>" />
+	
+	<div class="row" style="margin-top:  10px;">
+    	<div class="col-sm-6 col-md-4">
+        	<div class="thumbnail">
+                <div id="preview1" class="preview-box"></div>
+                <div class="caption">
+                    <h3>ภาพบัตรประชาชน</h3>
+                    <p>ปิดหมายเลขบัตร วันเดือนปีเกิด ด้วยนะครับ</p>
+                    <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="images" id="images"></span>
+                    <div id="response1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div id="preview2" class="preview-box"></div>
+                <div class="caption">
+                    <h3>ภาพหน้าแรกบัญชีธนาคาร</h3>
+                    <p>ชื่อบัญชีตรงกับบัตรประชาชน</p>
+                    <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="images" id="images"></span>
+                    <div id="response2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div id="preview3" class="preview-box"></div>
+                <div class="caption">
+                    <h3>ภาพเจ้าของเฟสตัวจริง</h3>
+                    <p>เขียนชื่อเฟสบุ๊คในกระดาษ ถ่ายพร้อมใบหน้าท่าน</p>
+                    <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="images" id="images"></span>
+                    <div id="response3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	
 	
 	<table class="table table-hover">
         <caption>
             ข้อมูลที่กรอกเข้ามา
         </caption>
-        <!--
-        <thead>
-            <th>รหัส</th>
-            <th>ชื่อเฟส</th>
-            <th>ชื่อ นามสกุล</th>
-        </thead>
-        -->
         <tbody>
             
             <?php if(!empty($memberRow)) { ?>
@@ -63,15 +95,25 @@
 	<button type="button" class="btn btn-lg btn-success" id="submitButton">
 		บันทึก
 	</button>
-	<button type="button" id="editBtn" class="btn btn-lg btn-default" id="backButton">แก้ไขข้อมูล</button>
+	<button type="button" id="editBtn" class="btn btn-lg btn-default" onclick="">แก้ไขข้อมูล</button>
 	<button type="button" class="btn btn-lg btn-default" id="backButton">ยกเลิก</button>
 	
 	</form>
-
-
+	
+	
+<!-- Footer -->
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="nav nav-pills nav-justified">
+            <li><a href="/">กระดานพระ</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy</a></li>
+        </ul>
+    </div>
+</div>	
+	
 </div>
-
-<!-- Main jumbotron for a primary marketing message or call to action -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -84,17 +126,7 @@
 <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
 
-<script>
-	$(function() {
-
-		$('#menu4').addClass("active");
-		
-		$("#editBtn ").click(function() {
-			location.href = '<?php echo base_url().'/member/request/'.$memberRow->ID ?>';
-		});
-
-	}); 
-</script>
+<script type="text/javascript" src="js/upload.js"></script>
 
 </body>
 </html>

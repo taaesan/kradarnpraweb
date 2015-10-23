@@ -13,6 +13,7 @@ class Member extends CI_Controller {
 		//load the department_model
 		$this -> load -> model('member_model');
 		$this -> load -> library('member_dto');
+        $this -> load -> model('image_model');
 
 	}
 
@@ -198,6 +199,61 @@ class Member extends CI_Controller {
 
 	private $path_to_image_directory = 'images/fullsized/';
 	private $path_to_thumbs_directory = 'images/thumbs/';
+    
+    public function testupload2() {
+
+        $data = array();
+        
+        if (isset($_FILES['images'])) {
+            
+            end($_FILES['images']['name']);
+            $key = key($_FILES['images']['name']);
+            
+            if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
+
+                $filename = $_FILES['images']['name'][$key];
+                $source = $_FILES['images']['tmp_name'][$key];
+                $target = $this -> path_to_image_directory . $filename;
+
+                move_uploaded_file($source, $target);
+
+                $newFileName = $this -> createThumbnail($filename, 500);
+                
+                if(isset($_POST['previmg'])){
+                    
+                    $postData  = $_POST['previmg'];
+                    $prevImg = $this -> path_to_thumbs_directory . $postData;
+                    
+                    //Remove original file
+                    if (file_exists($prevImg)) {
+                        unlink($prevImg);
+                    }
+                    
+                    //Delete prevImg from db
+                    $this->image_model->deleteImage($prevImg);
+                }
+                
+                //Insert image table
+                if(isset($_POST['memberId'])){
+                    
+                    $id = $_POST['memberId'];
+                    
+                    $columns = array(
+                        'name' => $newFileName,
+                        'cid' => $id
+                    );
+                    
+                    $insertId = $this->image_model->addImage($columns);
+                }
+                
+                $arr = array('fileName' => $newFileName, 'status' => 'Success');
+                
+                header('Content-Type: application/json');
+                echo json_encode($arr);
+                exit;
+            }
+        }
+    }
 
 	public function testupload() {
 
@@ -257,7 +313,7 @@ class Member extends CI_Controller {
             unlink($originalFile);
         }
 		
-		$tn = '<img src="' . $this -> path_to_thumbs_directory . $newFileName . '" alt="image" />';
+		$tn = $this -> path_to_thumbs_directory . $newFileName;
 		return $tn;
 	}
 

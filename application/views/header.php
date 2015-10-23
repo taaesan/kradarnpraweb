@@ -25,17 +25,77 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	  	<link rel="stylesheet" href="bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 		
 		<style>
-			img {
+			#imgHeader {
 				width: auto;
 				height: auto;
 				max-width: 100%;
 				max-height: 90%;
+				margin-bottom: 10px;
 			}
 			.error{
 				color:red;
 				font-weight: bold;
 				display: inline-block
 			}
+			
+			/*
+			 * Ajax upload image styles
+			 */
+			#main {
+                width: 300px;
+                margin:auto;
+                background: #ececec;
+                padding: 20px;
+                border: 1px solid #ccc;
+            }
+            
+            #image-list {
+                list-style:none;
+                margin:0;
+                padding:0;
+            }
+            #image-list li {
+                background: #fff;
+                border: 1px solid #ccc;
+                text-align:center;
+                padding:20px;
+                margin-bottom:19px;
+            }
+            #preview1 img {
+                width: 250px;
+                vertical-align: middle;
+                border:1px solid #474747;
+            }
+            .btn-file {
+                position: relative;
+                overflow: hidden;
+            }
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }  
+            
+            .preview-box{
+                /*width: 200px;*/
+                height: 200px;
+                position: relative;
+                overflow: hidden;
+                background-color: #ffffff;
+                border: 1px #ddd solid;
+                text-align: center;
+            }          
+            
 
 		</style>
 
