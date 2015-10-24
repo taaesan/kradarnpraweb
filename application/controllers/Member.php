@@ -42,28 +42,55 @@ class Member extends CI_Controller {
             $data['province'] = $memberRow -> PROVINCE_NAME;
             $data['address'] = $memberRow -> ADDRESS;
             $data['gender'] = $memberRow -> GENDER;
+            $data['picture1'] = $memberRow -> PICTURE1;
+            $data['picture2'] = $memberRow -> PICTURE2;
+            $data['picture3'] = $memberRow -> PICTURE3;
+            
         }else{
-            $data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender'), '');
+            $data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender', 'picture1', 'picture2', 'picture3'), '');
         }
 		
 		$this -> load -> view('header');
 		$this -> load -> view('member_request_view', $data);
 	}
 
+
+    public function check_cid($cid){
+        
+            $cidExist = $this -> member_model -> isCidExist($cid);
+            if ($cidExist)
+            {
+                $this->form_validation->set_message('check_cid', 'มีเลขประชาชนนี้แล้วในระบบ');
+                return FALSE;
+            }
+            else
+            {
+                return TRUE;
+            }
+    }
+
+
 	public function submitrequest() {
 
-		$this -> form_validation -> set_rules('fbName', 'fbName', 'required');
-		$this -> form_validation -> set_rules('name', 'name', 'required');
-		$this -> form_validation -> set_rules('surname', 'surname', 'required');
-		$this -> form_validation -> set_rules('cid', 'cid', 'required');
-		$this -> form_validation -> set_rules('birthDate', 'birthDate', 'required');
-		$this -> form_validation -> set_rules('bankName', 'bankName', 'required');
-		$this -> form_validation -> set_rules('accountNumber', 'accountNumber', 'required');
-		$this -> form_validation -> set_rules('phone', 'phone', 'required');
-		$this -> form_validation -> set_rules('province', 'province', 'required');
-		$this -> form_validation -> set_rules('address', 'address', 'required');
 
-		$this -> form_validation -> set_message('required', '***');
+        $memberId = $_POST['id'];
+
+		$this -> form_validation -> set_rules('fbName', 'fbName', 'trim|required');
+		$this -> form_validation -> set_rules('name', 'name', 'trim|required');
+		$this -> form_validation -> set_rules('surname', 'surname', 'trim|required');
+        
+        if(empty($memberId)){
+		  $this -> form_validation -> set_rules('cid', 'cid', 'trim|required|callback_check_cid');
+        }
+        
+		$this -> form_validation -> set_rules('birthDate', 'birthDate', 'trim|required');
+		$this -> form_validation -> set_rules('bankName', 'bankName', 'trim|required');
+		$this -> form_validation -> set_rules('accountNumber', 'accountNumber', 'trim|required');
+		$this -> form_validation -> set_rules('phone', 'phone', 'trim|required');
+		$this -> form_validation -> set_rules('province', 'province', 'trim|required');
+		$this -> form_validation -> set_rules('address', 'address', 'trim|required');
+
+		$this -> form_validation -> set_message('required', ' ต้องใส่ข้อมูล ***');
 		$this -> form_validation -> set_error_delimiters('<div class="error">', '</div>');
 
 		if ($this -> form_validation -> run() == FALSE) {
@@ -74,8 +101,6 @@ class Member extends CI_Controller {
 			$this -> load -> view('member_request_view', $data);
 		} else {
 
-            $memberId = $_POST['id'];
-            
             /** Clear the fields before use */
             $this -> member_dto -> clearFields();
             //member_dto -> id = $id;
@@ -94,11 +119,11 @@ class Member extends CI_Controller {
             $this -> member_dto -> bank_account_number = $_POST['accountNumber'];
             $this -> member_dto -> bank_name = $_POST['bankName'];
 
-            $this -> member_dto -> cid = $_POST['cid'];
+            $this -> member_dto -> cid = $_POST['hcid'];
             $this -> member_dto -> birth_date = $_POST['birthDate'];
             
             if(strlen($memberId) == 0){
-    			$memberId = $this -> member_model -> addMember($this -> member_dto);
+    			//$memberId = $this -> member_model -> addMember($this -> member_dto);
             }else{
                 $this -> member_model -> updateMember($memberId, $this -> member_dto);
             }
@@ -200,7 +225,7 @@ class Member extends CI_Controller {
 	private $path_to_image_directory = 'images/fullsized/';
 	private $path_to_thumbs_directory = 'images/thumbs/';
     
-    public function testupload2() {
+    public function uploadImage1() {
 
         $data = array();
         
@@ -219,6 +244,8 @@ class Member extends CI_Controller {
 
                 $newFileName = $this -> createThumbnail($filename, 500);
                 
+                
+                //Delete prevImage
                 if(isset($_POST['previmg'])){
                     
                     $postData  = $_POST['previmg'];
@@ -242,6 +269,127 @@ class Member extends CI_Controller {
                         'name' => $newFileName,
                         'cid' => $id
                     );
+                    
+                    $this->member_model->updateMemberImage1($id, $newFileName);
+                    
+                    $insertId = $this->image_model->addImage($columns);
+                }
+                
+                $arr = array('fileName' => $newFileName, 'status' => 'Success');
+                
+                header('Content-Type: application/json');
+                echo json_encode($arr);
+                exit;
+            }
+        }
+    }
+
+
+    public function uploadImage2() {
+
+        $data = array();
+        
+        if (isset($_FILES['images'])) {
+            
+            end($_FILES['images']['name']);
+            $key = key($_FILES['images']['name']);
+            
+            if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
+
+                $filename = $_FILES['images']['name'][$key];
+                $source = $_FILES['images']['tmp_name'][$key];
+                $target = $this -> path_to_image_directory . $filename;
+
+                move_uploaded_file($source, $target);
+
+                $newFileName = $this -> createThumbnail($filename, 500);
+                
+                
+                //Delete prevImage
+                if(isset($_POST['previmg'])){
+                    
+                    $postData  = $_POST['previmg'];
+                    $prevImg = $this -> path_to_thumbs_directory . $postData;
+                    
+                    //Remove original file
+                    if (file_exists($prevImg)) {
+                        unlink($prevImg);
+                    }
+                    
+                    //Delete prevImg from db
+                    $this->image_model->deleteImage($prevImg);
+                }
+                
+                //Insert image table
+                if(isset($_POST['memberId'])){
+                    
+                    $id = $_POST['memberId'];
+                    
+                    $columns = array(
+                        'name' => $newFileName,
+                        'cid' => $id
+                    );
+                    
+                    $this->member_model->updateMemberImage2($id, $newFileName);
+                    
+                    $insertId = $this->image_model->addImage($columns);
+                }
+                
+                $arr = array('fileName' => $newFileName, 'status' => 'Success');
+                
+                header('Content-Type: application/json');
+                echo json_encode($arr);
+                exit;
+            }
+        }
+    }
+
+    public function uploadImage3() {
+
+        $data = array();
+        
+        if (isset($_FILES['images'])) {
+            
+            end($_FILES['images']['name']);
+            $key = key($_FILES['images']['name']);
+            
+            if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
+
+                $filename = $_FILES['images']['name'][$key];
+                $source = $_FILES['images']['tmp_name'][$key];
+                $target = $this -> path_to_image_directory . $filename;
+
+                move_uploaded_file($source, $target);
+
+                $newFileName = $this -> createThumbnail($filename, 500);
+                
+                
+                //Delete prevImage
+                if(isset($_POST['previmg'])){
+                    
+                    $postData  = $_POST['previmg'];
+                    $prevImg = $this -> path_to_thumbs_directory . $postData;
+                    
+                    //Remove original file
+                    if (file_exists($prevImg)) {
+                        unlink($prevImg);
+                    }
+                    
+                    //Delete prevImg from db
+                    $this->image_model->deleteImage($prevImg);
+                }
+                
+                //Insert image table
+                if(isset($_POST['memberId'])){
+                    
+                    $id = $_POST['memberId'];
+                    
+                    $columns = array(
+                        'name' => $newFileName,
+                        'cid' => $id
+                    );
+                    
+                    $this->member_model->updateMemberImage3($id, $newFileName);
                     
                     $insertId = $this->image_model->addImage($columns);
                 }

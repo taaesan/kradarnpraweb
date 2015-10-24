@@ -12,6 +12,8 @@
 	echo form_open('member/submitrequest', $attributes);
 	?>
     <input type="hidden" name="id" id="id" value="<?php echo $id; ?>" />
+    <input type="hidden" name="hcid" id="hcid" value="<?php echo $cid; ?>" />
+    
     
 	<div class="form-group" style="margin-top: 10px;">
 		<label for="itemClosePrice">ชื่อเฟสบุ๊คที่ใช้</label><?php echo form_error('fbName'); ?>
@@ -27,7 +29,7 @@
 	</div>
 	<div class="form-group">
 		<label for="itemClosePrice">หมายเลขบัตรประจำตัวประชาชน</label><?php echo form_error('cid'); ?>
-		<input type="text" class="form-control" placeholder="ตัวเลข 13 หลัก" id="cid" name="cid" value="<?php echo set_value('cid', $cid); ?>"/>
+		<input type="text" class="form-control" placeholder="ตัวเลข 13 หลัก" maxlength="13" max="13" id="cid" name="cid" value="<?php echo set_value('cid', $cid); ?>" <?php if(strlen($id) > 0){ echo "disabled"; } ?> />
 	</div>
 
 	<div class="form-group">
@@ -201,7 +203,22 @@
 <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
 
 <script>
+
+    
+    
 	$(function() {
+	    
+	    var checkID = function(id){
+            if(id.length != 13) return false;
+            for(i=0, sum=0; i < 12; i++){
+                sum += parseFloat(id.charAt(i))*(13-i); 
+            }
+            if((11-sum%11)%10!=parseFloat(id.charAt(12))){
+                return false; 
+            }else{
+                return true;
+            }
+        }
 
 		$('#menu4').addClass("active");
 
@@ -211,11 +228,26 @@
 			ignoreReadonly: true,
 			allowInputToggle: true
 		});
-
+		
 		$("#submitButton").click(function() {
 
 			var bankSelect = document.getElementById("bankName");
 			var provinceSelect = document.getElementById("province");
+			var cid = document.getElementById("cid");
+			
+			if(cid.value.length == 0){
+                alert('กรอก เลขบัตรประชาชน ด้วยครับ');
+                cid.focus();
+                return;
+            }
+			
+			
+			if(cid.value.length > 0 && checkID(cid.value) == false){
+			    alert('เลขบัตรประชาชนไม่ถูกต้อง');
+			    cid.focus();
+			    return;
+			}
+			
 			if (bankSelect.selectedIndex == 0) {
 				alert('เลือก ธนาคาร ด้วยครับ');
 				bankSelect.focus();
@@ -235,7 +267,6 @@
 				gender1.focus();
 				return;
 			}
-			
 
 			document.forms['requestForm'].submit();
 

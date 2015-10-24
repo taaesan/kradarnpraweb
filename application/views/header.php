@@ -61,11 +61,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 padding:20px;
                 margin-bottom:19px;
             }
+            
             #preview1 img {
                 width: 250px;
                 vertical-align: middle;
                 border:1px solid #474747;
             }
+            #preview2 img {
+                width: 250px;
+                vertical-align: middle;
+                border:1px solid #474747;
+            }
+            #preview3 img {
+                width: 250px;
+                vertical-align: middle;
+                border:1px solid #474747;
+            }
+            
             .btn-file {
                 position: relative;
                 overflow: hidden;

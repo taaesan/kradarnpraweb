@@ -39,7 +39,7 @@ class Image_model extends CI_Model {
 	
 	public function deleteImage($file){
 	    $this->db->like('name', $file);
-        $this -> db -> update('tb_image');
+        $this -> db -> delete('tb_image');
     }
 	
 	public function getTempMemberById($memberId){

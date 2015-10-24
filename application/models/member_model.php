@@ -79,13 +79,50 @@ class Member_model extends CI_Model {
 	
 	public function getTempMemberById($memberId){
 		
-        $query = " SELECT ID, FACEBOOK_NAME, FACEBOOK_URL, PROFILE_PICTURE, NAME, SURNAME, GENDER, ADDRESS, PROVINCE_NAME, PHONE_NUMBER, BANK_ACCOUNT_NUMBER, BANK_NAME, NID, CID, BIRTH_DATE"
+        $query = " SELECT ID, FACEBOOK_NAME, FACEBOOK_URL, PROFILE_PICTURE, NAME, SURNAME, GENDER, ADDRESS, PROVINCE_NAME, PHONE_NUMBER, BANK_ACCOUNT_NUMBER, BANK_NAME, NID, CID, BIRTH_DATE, PICTURE1, PICTURE2, PICTURE3 "
         ." FROM TB_MEMBER "
         ." WHERE ID = ? ";
 		
 		$result = $this -> db -> query($query, array($memberId));
 		return $result -> row();
-	}	
+	}
+    
+    
+    public function updateMemberImage1($id, $picture){
+        
+        $columns = array(
+            'picture1' => $picture
+        );
+        
+        $this -> db -> where('id', $id);
+        $this -> db -> update('tb_member', $columns);
+    }
+    
+    public function updateMemberImage2($id, $picture){
+        
+        $columns = array(
+            'picture2' => $picture
+        );
+        
+        $this -> db -> where('id', $id);
+        $this -> db -> update('tb_member', $columns);
+    }
+    
+    public function updateMemberImage3($id, $picture){
+        
+        $columns = array(
+            'picture3' => $picture
+        );
+        
+        $this -> db -> where('id', $id);
+        $this -> db -> update('tb_member', $columns);
+    }
+    
+    public function isCidExist($cid) {
+        $query = " SELECT CID FROM TB_MEMBER WHERE CID = ? ";
+        $query = $this -> db -> query($query, array($cid));
+        return $query -> num_rows() > 0;
+    }	
 
 	
 
