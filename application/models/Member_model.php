@@ -143,6 +143,16 @@ class Member_model extends CI_Model {
         
     } 
     
+    public function getRequestMember2(){
+        $query =     
+        'select m.id, m.facebook_name, m.facebook_url, m.profile_picture, concat_ws(\' \', m.name, m.surname) name, m.gender, concat_ws(\' \', m.address, m.province_name) address , m.phone_number, concat_ws(\' \', m.bank_account_number, m.bank_name) bank_name, m.cid, m.birth_date, m.picture1, m.picture2, m.picture3 '.
+        'from tb_member m limit 10;';
+        
+        $query = $this -> db -> query($query, null);
+        return $query -> result_array();
+        
+    } 
+    
     public function addTempId($id){
         $column = array(
             'name' => $id    
@@ -161,6 +171,7 @@ class Member_model extends CI_Model {
         $query = $this -> db -> query($query, null);
         return $query -> result_array();
     }
+    
     
     public function addMemberMapping($columns){
         

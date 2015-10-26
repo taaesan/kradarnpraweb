@@ -15,9 +15,9 @@
     <table id="member-table" data-toggle="table" data-show-columns="false" data-url="member/membermanagerjson.html">
         
         <thead>
-            <th data-field="ID">รหัส</th>
-            <th data-field="FACEBOOK_NAME">ชื่อเฟส</th>
-            <th data-field="NAME">ชื่อ นามสกุล</th>
+            <th data-field="id">รหัส</th>
+            <th data-field="facebook_name">ชื่อเฟส</th>
+            <th data-field="name">ชื่อ นามสกุล</th>
         </thead>
         
     </table>
@@ -182,7 +182,21 @@
                     },
                     success: function (res) {
                         if(res){
-                            $data = res;
+                            
+                            $fbName.innerHTML = '';
+                            $name.innerHTML = '';
+                            $cid.innerHTML = '';
+                            $gender.innerHTML = '';
+                            $birthDate.innerHTML = '';
+                            $address.innerHTML = '';
+                            $phone.innerHTML ='';
+                            $bank.innerHTML = '';
+                            $memberId.value = '';
+                            $picture1.src = '';
+                            $picture2.src = '';
+                            $picture3.src = '';
+                            
+                            $table.bootstrapTable("load", res);
                         } 
                     }
                 });
@@ -191,11 +205,12 @@
             
         });
 		
-		$('#member-table').bootstrapTable({
-		  
-		}).on('load', $data 
+		var $table = $('#member-table');
 		
-		).on('click-row.bs.table', function (e, row, $element) {
+		$table.bootstrapTable({
+		    
+		    
+		}).on('click-row.bs.table', function (e, row, $element) {
             
             //Get avaliable ids
             $.ajax({
@@ -209,46 +224,51 @@
                 success: function (res) {
                     if(res){
                         console.log(res);
-                        $memberNum.value = res[0].ID;
+                        $memberNum.value = res[0].id;
                         var avIds = '';
                         for(i=0; i< res.length; i++){
-                            avIds = avIds + ", " + res[i].ID 
+                            avIds = avIds + ", " + res[i].id 
                         }
                         $avaliableIds.text(avIds);
                     } 
                 }
             });
             
-            $fbName.innerHTML = row.FACEBOOK_NAME;
-            $name.innerHTML = row.NAME;
-            $cid.innerHTML = row.CID;
-            $gender.innerHTML = row.GENDER;
-            $birthDate.innerHTML = row.BIRTH_DATE;
-            $address.innerHTML = row.ADDRESS;
-            $phone.innerHTML = row.PHONE_NUMBER;
-            $bank.innerHTML = row.BANK_NAME;
-            $memberId.value = row.ID;
+            $fbName.innerHTML = row.facebook_name;
+            $name.innerHTML = row.name;
+            $cid.innerHTML = row.cid;
+            $gender.innerHTML = row.gender;
+            $birthDate.innerHTML = row.birth_date;
+            $address.innerHTML = row.address;
+            $phone.innerHTML = row.phone_number;
+            $bank.innerHTML = row.bank_name;
+            $memberId.value = row.id;
             
-            if(row.PICTURE1.length > 0){
-                $picture1.src = row.PICTURE1;
+            if(row.picture1.length > 0){
+                $picture1.style.visibility = 'visible';
+                $picture1.src = row.picture1;
             }else{
                 $picture1.style.visibility = 'hidden';
             }
             
-            if(row.PICTURE2.length > 0){
-                $picture2.src = row.PICTURE2;
+            if(row.picture2.length > 0){
+                $picture2.style.visibility = 'visible';
+                $picture2.src = row.picture2;
             }else{
                 $picture2.style.visibility = 'hidden';
             }
             
-            if(row.PICTURE3.length > 0){
-                $picture3.src = row.PICTURE3;
+            if(row.picture3.length > 0){
+                $picture3.style.visibility = 'visible';
+                $picture3.src = row.picture3;
             }else{
                 $picture3.style.visibility = 'hidden';
             }
 
             
-	    });//end row click
+	    }).on('load-success.bs.table', function (e, data) {
+            console.log(data);
+        });//end row click
 	    
     });//end main 
 </script>

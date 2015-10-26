@@ -14,7 +14,7 @@ class Member extends CI_Controller {
 		$this -> load -> model('member_model');
 		//$this -> load -> library('member_dto');
         $this -> load -> model('image_model');
-
+        $this -> load -> library('session');
 	}
 
 	public function index() {
@@ -471,18 +471,109 @@ class Member extends CI_Controller {
 
     public function admin(){
         
-        $data = array(
-        'email' => '',
-        'password' => ''
-        );
-        
-        $this -> load -> view('header');
-        $this -> load -> view('admin_login_view', $data);
+        $loggedin = $this->session->userdata('loggedin');
+        if($loggedin){
+            $this -> load -> view('header');
+            $this -> load -> view('admin_manager_view', null);
+        }else{
+            $data = array(
+            'email' => '',
+            'password' => ''
+            );
+            
+            $this -> load -> view('header');
+            $this -> load -> view('admin_login_view', $data);
+        }
     }
     
     public function adminlogin(){
+        // $loggedin = $this->session->userdata('loggedin');
+//         
+        // if(!$loggedin){
+            // redirect('member/admin');
+            // exit;
+        // }
         
+        $email = $_POST['email'];
+        $password = $_POST['password'];
         
+        $memberRow = $this->member_model->getMemberByEmail($email);
+        
+        if(password_verify ( $password, $memberRow->password)){
+           $newdata = array(
+            'username'  => $memberRow->facebook_name,
+            'loggedin' => TRUE
+            );
+
+            $this->session->set_userdata($newdata);     
+            
+        }
+        
+        $this -> load -> view('header');
+        $this -> load -> view('admin_manager_view', null);
+        
+    }
+    
+    public function membermanagerjson(){
+        
+        $loggedin = $this->session->userdata('loggedin');
+        if(!$loggedin){
+            redirect('member/admin');
+            exit;
+        }
+        
+        $requestRows = $this->member_model->getRequestMember();
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
+    
+    public function getavaliableids(){
+        
+        $loggedin = $this->session->userdata('loggedin');
+        
+        if(!$loggedin){
+            redirect('member/admin');
+            exit;
+        }
+        
+        $requestRows = $this->member_model->getAvaliableIds();
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
+    
+    public function logout(){
+        $this->session->unset_userdata('loggedin');
+        
+        redirect('member/admin');
+        exit;
+    }
+    
+    public function approve(){
+        
+        $loggedin = $this->session->userdata('loggedin');
+        
+        if(!$loggedin){
+            redirect('member/admin');
+            exit;
+        }
+        
+        $columns = array(
+            'group_id' => 1,
+            'member_num' => $_POST['memberNum'],
+            'member_id' => $_POST['memberId']
+        );
+        
+        $this->member_model->addMemberMapping($columns);
+        
+        //update a new data
+        $requestRows = $this->member_model->getRequestMember();
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
     }
 
 }
