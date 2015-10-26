@@ -5,7 +5,7 @@
 	<table class="table table-hover">
 		<caption>
 			<?php if(!empty($memberRow)) { ?>
-				<?php echo $memberRow->GROUP_NAME; ?>
+				<?php echo $memberRow->group_name; ?>
 			<?php } ?>
 		</caption>
 		<!--
@@ -20,25 +20,43 @@
 			<?php if(!empty($memberRow)) { ?>
 			<tr>
 				<td>หมายเลขสมาชิก</td>
-				<td><?php echo $memberRow->MEMBER_NUM; ?></td>
+				<td><?php echo $memberRow->member_num; ?></td>
 			</tr>
 			<tr>
 				<td>ชื่อเฟสบุ๊ค</td>
-				<td><?php echo $memberRow->FACEBOOK_NAME; ?> </td>
+				<td><?php echo $memberRow->facebook_name; ?> </td>
 			</tr>
 			<tr>
 				<td>ชื่อ นามสกุล</td>
-				<td><?php echo $memberRow->NAME; ?> <?php echo $memberRow->SURNAME; ?></td>
+				<td><?php echo $memberRow->name; ?> <?php echo $memberRow->surname; ?></td>
 			</tr>
 			<tr>
 				<td>ธนาคาร</td>
-				<td><?php echo $memberRow->BANK_NAME; ?> <?php echo $memberRow->BANK_ACCOUNT_NUMBER; ?></td>
+				<td><?php echo $memberRow->bank_name; ?> <?php echo $memberRow->bank_account_number; ?></td>
 			</tr>
 			<?php } ?>
 			
 		</tbody>
 	</table>
 	<a href="member.html">&lt;กลับ</a>
+	
+    <!-- Footer -->
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <a href="http://www.kradarnpra.com">กระดานพระ</a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/sitluangpoonham/"> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a>
+                </li>
+                <li>
+                    <a href="http://www.kradarnpra.com/v1/about/contact">ติดต่อทีมงาน</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 	
 </div>
 

@@ -33,10 +33,10 @@
 		<tbody>
 			
 			<?php foreach($result as $item):?>
-			<tr class="clickable-row" data-href="member/g/<?php echo $item['GROUP_ID']?>/<?php echo $item['MEMBER_NUM']?>">
-				<td><?php echo $item['MEMBER_NUM']?></td>
-				<td><?php echo $item['FACEBOOK_NAME']?></td>
-				<td><?php echo $item['NAME'].' '.$item['SURNAME']?></td>
+			<tr class="clickable-row" data-href="member/g/<?php echo $item['group_id']?>/<?php echo $item['member_num']?>">
+				<td><?php echo $item['member_num']?></td>
+				<td><?php echo $item['facebook_name']?></td>
+				<td><?php echo $item['name'].' '.$item['surname']?></td>
 			</tr>
 			<?php endforeach; ?>
 			
@@ -50,6 +50,24 @@
            	<?php } ?>
         </div>
     </div>
+    
+    <!-- Footer -->
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <a href="http://www.kradarnpra.com">กระดานพระ</a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/sitluangpoonham/"> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a>
+                </li>
+                <li>
+                    <a href="http://www.kradarnpra.com/v1/about/contact">ติดต่อทีมงาน</a>
+                </li>
+            </ul>
+        </div>
+    </div>    
 	
 	
 </div>

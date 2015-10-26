@@ -16,6 +16,7 @@ class Member_dto{
 	var $nid;
 	var $cid;
 	var $birth_date;
+    var $password;
 	
 	public function clearFields(){
 		$this -> facebook_name = null;
@@ -32,5 +33,7 @@ class Member_dto{
 		$this -> nid = null;
 		$this -> cid = null;
 		$this -> birth_date = null;
+        $this -> password = null;
+        
 	}
 }

@@ -12,7 +12,7 @@ class Member extends CI_Controller {
 
 		//load the department_model
 		$this -> load -> model('member_model');
-		$this -> load -> library('member_dto');
+		//$this -> load -> library('member_dto');
         $this -> load -> model('image_model');
 
 	}
@@ -30,21 +30,21 @@ class Member extends CI_Controller {
         $memberRow = $this -> member_model -> getTempMemberById($memberId);
         
         if($memberRow != null){
-            $data['id'] = $memberRow -> ID;
-            $data['fbName'] = $memberRow -> FACEBOOK_NAME;
-            $data['name'] = $memberRow -> NAME;
-            $data['surname'] = $memberRow -> SURNAME;
-            $data['cid'] = $memberRow -> CID;
-            $data['birthDate'] = $memberRow -> BIRTH_DATE;
-            $data['bankName'] = $memberRow -> BANK_NAME;
-            $data['accountNumber'] = $memberRow -> BANK_ACCOUNT_NUMBER;
-            $data['phone'] = $memberRow -> PHONE_NUMBER;
-            $data['province'] = $memberRow -> PROVINCE_NAME;
-            $data['address'] = $memberRow -> ADDRESS;
-            $data['gender'] = $memberRow -> GENDER;
-            $data['picture1'] = $memberRow -> PICTURE1;
-            $data['picture2'] = $memberRow -> PICTURE2;
-            $data['picture3'] = $memberRow -> PICTURE3;
+            $data['id'] = $memberRow -> id;
+            $data['fbName'] = $memberRow -> facebook_name;
+            $data['name'] = $memberRow -> name;
+            $data['surname'] = $memberRow -> surname;
+            $data['cid'] = $memberRow -> cid;
+            $data['birthDate'] = $memberRow -> birth_date;
+            $data['bankName'] = $memberRow -> bank_name;
+            $data['accountNumber'] = $memberRow -> bank_account_number;
+            $data['phone'] = $memberRow -> phone_number;
+            $data['province'] = $memberRow -> province_name;
+            $data['address'] = $memberRow -> address;
+            $data['gender'] = $memberRow -> gender;
+            $data['picture1'] = $memberRow -> picture1;
+            $data['picture2'] = $memberRow -> picture2;
+            $data['picture3'] = $memberRow -> picture3;
             
         }else{
             $data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender', 'picture1', 'picture2', 'picture3'), '');
@@ -102,30 +102,34 @@ class Member extends CI_Controller {
 		} else {
 
             /** Clear the fields before use */
-            $this -> member_dto -> clearFields();
+            //'clearFields();
             //member_dto -> id = $id;
-            $this -> member_dto -> facebook_name = $_POST['fbName'];
+            $column = array(
+            'facebook_name' => $_POST['fbName'],
 
-            $this -> member_dto -> facebook_url = '';
-            $this -> member_dto -> profile_picture = '';
-            $this -> member_dto -> nid = '';
+            'facebook_url' => '',
+            'profile_picture' => '',
+            'nid' => '',
 
-            $this -> member_dto -> name = $_POST['name'];
-            $this -> member_dto -> surname = $_POST['surname'];
-            $this -> member_dto -> gender = $_POST['genders'];
-            $this -> member_dto -> address = $_POST['address'];
-            $this -> member_dto -> province_name = $_POST['province'];
-            $this -> member_dto -> phone_number = $_POST['phone'];
-            $this -> member_dto -> bank_account_number = $_POST['accountNumber'];
-            $this -> member_dto -> bank_name = $_POST['bankName'];
+            'name' => $_POST['name'],
+            'surname' => $_POST['surname'],
+            'gender' => $_POST['genders'],
+            'address' => $_POST['address'],
+            'province_name' => $_POST['province'],
+            'phone_number' => $_POST['phone'],
+            'bank_account_number' => $_POST['accountNumber'],
+            'bank_name' => $_POST['bankName'],
 
-            $this -> member_dto -> cid = $_POST['hcid'];
-            $this -> member_dto -> birth_date = $_POST['birthDate'];
+            'cid' => $_POST['cid'],
+            'birth_date' => $_POST['birthDate']
+            );
             
             if(strlen($memberId) == 0){
-    			//$memberId = $this -> member_model -> addMember($this -> member_dto);
+    			$memberId = $this -> member_model -> addMember($column);
             }else{
-                $this -> member_model -> updateMember($memberId, $this -> member_dto);
+                
+                unset($column['cid']);
+                $this -> member_model -> updateMember($memberId, $column);
             }
             
             redirect('member/uploaddoc/'.$memberId);
@@ -464,5 +468,21 @@ class Member extends CI_Controller {
 		$tn = $this -> path_to_thumbs_directory . $newFileName;
 		return $tn;
 	}
+
+    public function admin(){
+        
+        $data = array(
+        'email' => '',
+        'password' => ''
+        );
+        
+        $this -> load -> view('header');
+        $this -> load -> view('admin_login_view', $data);
+    }
+    
+    public function adminlogin(){
+        
+        
+    }
 
 }

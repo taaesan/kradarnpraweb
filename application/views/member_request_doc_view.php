@@ -3,18 +3,18 @@
 	<img src='images/bg01.jpg' id="imgHeader">
 
 	<ul class="nav nav-pills">
-	  <li role="presentation"><a href="<?php echo base_url().'member/request/'.$memberRow->ID ?>">1. ข้อมูลสมาชิก</a></li>
+	  <li role="presentation"><a href="<?php echo base_url().'member/request/'.$memberRow->id ?>">1. ข้อมูลสมาชิก</a></li>
 	  <li role="presentation" class="active"><a href="#" onclick="return false;">2. ส่งเอกสาร และ ตรวจสอบข้อมูล</a></li>
 	</ul>
 	
-	<input type="hidden" name="id" id="id" value="<?php if(!empty($memberRow)) {echo $memberRow->ID;} ?>" />
+	<input type="hidden" name="id" id="id" value="<?php if(!empty($memberRow)) {echo $memberRow->id;} ?>" />
 	
 	<div class="row" style="margin-top:  10px;">
     	<div class="col-sm-6 col-md-4">
         	<div class="thumbnail">
                 <div id="preview1" class="preview-box">
-                    <?php if(!empty($memberRow -> PICTURE1)) { ?>
-                        <img src="<?php echo $memberRow->PICTURE1; ?>"/>
+                    <?php if(!empty($memberRow -> picture1)) { ?>
+                        <img src="<?php echo $memberRow->picture1; ?>"/>
                     <?php }?>
                 </div>
                 <div class="caption">
@@ -29,8 +29,8 @@
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <div id="preview2" class="preview-box">
-                    <?php if(!empty($memberRow -> PICTURE2)) { ?>
-                        <img src="<?php echo $memberRow->PICTURE2; ?>"/>
+                    <?php if(!empty($memberRow -> picture2)) { ?>
+                        <img src="<?php echo $memberRow->picture2; ?>"/>
                     <?php }?>                    
                 </div>
                 <div class="caption">
@@ -45,8 +45,8 @@
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <div id="preview3" class="preview-box">
-                    <?php if(!empty($memberRow -> PICTURE3)) { ?>
-                        <img src="<?php echo $memberRow->PICTURE3; ?>"/>
+                    <?php if(!empty($memberRow -> picture3)) { ?>
+                        <img src="<?php echo $memberRow->picture3; ?>"/>
                     <?php }?>                    
                     
                 </div>
@@ -73,35 +73,35 @@
             
             <tr>
                 <td>ชื่อเฟสบุ๊ค</td>
-                <td><?php echo $memberRow->FACEBOOK_NAME; ?> </td>
+                <td><?php echo $memberRow->facebook_name; ?> </td>
             </tr>
             <tr>
                 <td>ชื่อ นามสกุล</td>
-                <td><?php echo $memberRow->NAME; ?> <?php echo $memberRow->SURNAME; ?></td>
+                <td><?php echo $memberRow->name; ?> <?php echo $memberRow->surname; ?></td>
             </tr>
             <tr>
                 <td>หมายเลขบัตรประจำตัวประชาชน</td>
-                <td><?php echo $memberRow->CID; ?></td>
+                <td><?php echo $memberRow->cid; ?></td>
             </tr>
             <tr>
                 <td>เพศ</td>
-                <td><?php echo $memberRow->GENDER; ?></td>
+                <td><?php echo $memberRow->gender; ?></td>
             </tr>  
             <tr>
                 <td>วันเดือนปีเกิด</td>
-                <td><?php echo $memberRow->BIRTH_DATE; ?></td>
+                <td><?php echo $memberRow->birth_date; ?></td>
             </tr>            
             <tr>
                 <td>ที่อยู่</td>
-                <td><?php echo $memberRow->ADDRESS; ?> <?php echo $memberRow->PROVINCE_NAME; ?></td>
+                <td><?php echo $memberRow->address; ?> <?php echo $memberRow->province_name; ?></td>
             </tr> 
             <tr>
                 <td>เบอร์โทร</td>
-                <td><?php echo $memberRow->PHONE_NUMBER; ?></td>
+                <td><?php echo $memberRow->phone_number; ?></td>
             </tr>                              
             <tr>
                 <td>ธนาคาร</td>
-                <td><?php echo $memberRow->BANK_NAME; ?> <?php echo $memberRow->BANK_ACCOUNT_NUMBER; ?></td>
+                <td><?php echo $memberRow->bank_name; ?> <?php echo $memberRow->bank_account_number; ?></td>
             </tr>
             <?php } ?>
             
@@ -116,17 +116,23 @@
 	</form>
 	
 	
-<!-- Footer -->
-<hr>
-<div class="row">
-    <div class="col-lg-12">
-        <ul class="nav nav-pills nav-justified">
-            <li><a href="/">กระดานพระ</a></li>
-            <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Privacy</a></li>
-        </ul>
+    <!-- Footer -->
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <a href="http://www.kradarnpra.com">กระดานพระ</a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/groups/sitluangpoonham/"> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a>
+                </li>
+                <li>
+                    <a href="http://www.kradarnpra.com/v1/about/contact">ติดต่อทีมงาน</a>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>	
 
 
 
@@ -191,7 +197,7 @@
 <script>
     
 function editdata(){
-    location.href = '<?php echo base_url().'member/request/'.$memberRow->ID ?>';
+    location.href = '<?php echo base_url().'member/request/'.$memberRow->id ?>';
 }
 
 function save(){

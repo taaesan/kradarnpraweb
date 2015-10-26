@@ -15,9 +15,9 @@ class Image_model extends CI_Model {
 		$this -> load -> database();
 
 		$this -> _query = 
-		  " SELECT TRIM(CONCAT((SELECT MAX(MEMBER_PREFIX) FROM TB_GROUP WHERE ID = ? ), GM.MEMBER_NUM)) MEMBER_NUM, M.FACEBOOK_NAME, M.NAME, M.SURNAME , M.BANK_NAME, M.BANK_ACCOUNT_NUMBER, GM.GROUP_ID " 
-		. " FROM TB_GROUP_MEMBER_MAPPING GM INNER JOIN TB_MEMBER M " 
-		. " ON GM.MEMBER_ID = M.ID WHERE GM.GROUP_ID = ? ";
+		  " select trim(concat((select max(member_prefix) from tb_group where id = ? ), gm.member_num)) member_num, m.facebook_name, m.name, m.surname , m.bank_name, m.bank_account_number, gm.group_id " 
+		. " from tb_group_member_mapping gm inner join tb_member m " 
+		. " on gm.member_id = m.id where gm.group_id = ? ";
 
 	}
 
@@ -44,9 +44,9 @@ class Image_model extends CI_Model {
 	
 	public function getTempMemberById($memberId){
 		
-        $query = " SELECT ID, FACEBOOK_NAME, FACEBOOK_URL, PROFILE_PICTURE, NAME, SURNAME, GENDER, ADDRESS, PROVINCE_NAME, PHONE_NUMBER, BANK_ACCOUNT_NUMBER, BANK_NAME, NID, CID, BIRTH_DATE"
-        ." FROM TB_MEMBER "
-        ." WHERE ID = ? ";
+        $query = " select id, facebook_name, facebook_url, profile_picture, name, surname, gender, address, province_name, phone_number, bank_account_number, bank_name, nid, cid, birth_date"
+        ." from tb_member "
+        ." where id = ? ";
 		
 		$result = $this -> db -> query($query, array($memberId));
 		return $result -> row();
