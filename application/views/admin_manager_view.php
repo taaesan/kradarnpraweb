@@ -34,6 +34,10 @@
                 </caption>
                 <tbody>
                     <tr>
+                        <td>edit link</td>
+                        <td><a id="editLink" href="#" target="_blank"></a></td>
+                    </tr>
+                    <tr>
                         <td>หมายเลขสมาชิก</td>
                         <td><input type="text" id="memberNum" /><input type="hidden" id="memberId" /></td>
                     </tr>
@@ -162,6 +166,7 @@
 		var $picture3 = document.getElementById('picture3');
 		var $memberNum = document.getElementById('memberNum');
 		var $memberId = document.getElementById('memberId');
+		var $editLink = document.getElementById('editLink');
 		var $avaliableIds = $('#avaliableIds');
 		var $data = {};
 		
@@ -234,6 +239,8 @@
                 }
             });
             
+            $editLink.href = 'member/uploaddoc/'+row.id+'.html';
+            $editLink.innerHTML = row.id;
             $fbName.innerHTML = row.facebook_name;
             $name.innerHTML = row.name;
             $cid.innerHTML = row.cid;
