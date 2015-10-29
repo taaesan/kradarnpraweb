@@ -158,12 +158,13 @@ class Member extends CI_Controller {
 		$data['memberRow'] = $this -> member_model -> getMemberDetail($groupId, $memberId);
 
 		if (isset($data['memberRow'])) {
-			$this -> load -> view('header');
+			//$this -> load -> view('header');
 			$this -> load -> view('member_detail_view', $data);
 		} else {
-			$data = $this -> buildData(1);
-			$this -> load -> view('header');
-			$this -> load -> view('member_main_view', $data);
+			//$data = $this -> buildData(1);
+			//$this -> load -> view('header');
+			//$this -> load -> view('member_main_view', $data);
+            redirect('member');
 		}
 	}
 
@@ -407,6 +408,95 @@ class Member extends CI_Controller {
         }
     }
 
+    public function uploadProfileImage() {
+        
+        
+        if(isset($_POST['memberId']) && isset($_POST['cid'])){
+            $memberId = $_POST['memberId'];
+            $cid = $_POST['cid'];
+            $memberRow = $this -> member_model -> getMemberById($memberId);
+        
+            if($memberRow != null){
+                
+                if($cid != $memberRow->cid){
+                    $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
+                    header('Content-Type: application/json');
+                    echo json_encode($arr);
+                    exit;
+                }
+                
+            }else{
+                $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
+                header('Content-Type: application/json');
+                echo json_encode($arr);
+                exit;
+            }
+            
+        }else{
+            $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
+            
+            header('Content-Type: application/json');
+            echo json_encode($arr);
+            exit;
+        }
+
+        $data = array();
+        
+        if (isset($_FILES['images'])) {
+            
+            end($_FILES['images']['name']);
+            $key = key($_FILES['images']['name']);
+            
+            if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
+
+                $filename = $_FILES['images']['name'][$key];
+                $source = $_FILES['images']['tmp_name'][$key];
+                $target = $this -> path_to_image_directory . $filename;
+
+                move_uploaded_file($source, $target);
+
+                $newFileName = $this -> createThumbnail($filename, 500);
+                
+                
+                //Delete prevImage
+                if(isset($_POST['previmg'])){
+                    
+                    $postData  = $_POST['previmg'];
+                    $prevImg = $this -> path_to_thumbs_directory . $postData;
+                    
+                    //Remove original file
+                    if (file_exists($prevImg)) {
+                        unlink($prevImg);
+                    }
+                    
+                    //Delete prevImg from db
+                    $this->image_model->deleteImage($prevImg);
+                }
+                
+                //Insert image table
+                if(isset($_POST['memberId'])){
+                    
+                    $id = $_POST['memberId'];
+                    
+                    $columns = array(
+                        'name' => $newFileName,
+                        'cid' => $id
+                    );
+                    
+                    $this->member_model->updateMemberImage4($id, $newFileName);
+                    
+                    $insertId = $this->image_model->addImage($columns);
+                }
+                
+                $arr = array('fileName' => $newFileName, 'status' => 'Success', 'message' => 'สำเร็จ');
+                
+                header('Content-Type: application/json');
+                echo json_encode($arr);
+                exit;
+            }
+        }
+    }
+
 	public function testupload() {
 
 		$data = array();
@@ -487,12 +577,12 @@ class Member extends CI_Controller {
     }
     
     public function adminlogin(){
-        // $loggedin = $this->session->userdata('loggedin');
+         //$loggedin = $this->session->userdata('loggedin');
 //         
-        // if(!$loggedin){
+         // if(!$loggedin){
             // redirect('member/admin');
             // exit;
-        // }
+         // }
         
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -509,8 +599,7 @@ class Member extends CI_Controller {
             
         }
         
-        $this -> load -> view('header');
-        $this -> load -> view('admin_manager_view', null);
+        redirect('member/admin');
         
     }
     

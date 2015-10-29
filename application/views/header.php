@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 	<head>
 		<base href="<?php echo base_url() ?>">
 		<meta charset="utf-8">

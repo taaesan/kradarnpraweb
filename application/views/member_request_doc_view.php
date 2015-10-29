@@ -10,6 +10,11 @@
 	<input type="hidden" name="id" id="id" value="<?php if(!empty($memberRow)) {echo $memberRow->id;} ?>" />
 	
 	<div class="row" style="margin-top:  10px;">
+	    <div class="col-sm-12 col-md-12">
+            <h2>อัพโหลดเอกสารต่อไปนี้</h2>
+        </div>
+	</div>
+	<div class="row">
     	<div class="col-sm-6 col-md-4">
         	<div class="thumbnail">
                 <div id="preview1" class="preview-box">
@@ -61,7 +66,11 @@
         </div>
     </div>
 	
-	
+	<div class="row">
+        <div class="col-sm-12 col-md-12">
+            <h2>ตรวจสอบข้อมูล</h2>
+        </div>
+    </div>
 	
 	<table class="table table-hover">
         <caption>
@@ -109,7 +118,7 @@
     </table>
 
 	<button type="button" class="btn btn-lg btn-success" id="submitButton" onclick="save()">
-		บันทึก
+		ส่งข้อมูล
 	</button>
 	<button type="button" id="editBtn" class="btn btn-lg btn-default" onclick="editdata()">แก้ไขข้อมูล</button>
 	
