@@ -137,6 +137,58 @@ class Member extends CI_Controller {
 		}
 	}
 
+    public function updatemember() {
+
+
+        $memberId = $_POST['id'];
+        $memberNum = $_POST['memberNum'];
+        $groupId = $_POST['groupId'];
+
+        $this -> form_validation -> set_rules('fbName', 'fbName', 'trim|required');
+        
+        //if(empty($memberId)){
+        //$this -> form_validation -> set_rules('cid', 'cid', 'trim|required|callback_check_cid');
+        //}
+        
+        $this -> form_validation -> set_rules('bankName', 'bankName', 'trim|required');
+        $this -> form_validation -> set_rules('accountNumber', 'accountNumber', 'trim|required');
+
+        $this -> form_validation -> set_message('required', ' ต้องใส่ข้อมูล ***');
+        $this -> form_validation -> set_error_delimiters('<div class="error">', '</div>');
+
+        if ($this -> form_validation -> run() == FALSE) {
+
+            //$data = array_fill_keys(array('id','fbName', 'name', 'surname', 'cid', 'birthDate', 'bankName', 'accountNumber', 'phone', 'province', 'address', 'gender'), '');
+            
+            $data['memberRow'] = $this -> member_model -> getMemberDetail($groupId, $memberNum);           
+            $this -> load -> view('member_detail_view', $data);
+        } else {
+
+            /** Clear the fields before use */
+            //'clearFields();
+            //member_dto -> id = $id;
+            $column = array(
+            'facebook_name' => $_POST['fbName'],
+
+            'facebook_url' => '',
+            'profile_picture' => '',
+            'nid' => '',
+
+            'bank_account_number' => $_POST['accountNumber'],
+            'bank_name' => $_POST['bankName'],
+
+            'cid' => $_POST['cid']
+            );
+                
+            $this -> member_model -> updateMember($memberId, $column);
+            
+            redirect('member');
+
+        }
+    }
+
+
+
     public function uploaddoc(){
         
         $memberId = ($this -> uri -> segment(3)) ? $this -> uri -> segment(3) : 0;
@@ -487,7 +539,7 @@ class Member extends CI_Controller {
 
                 move_uploaded_file($source, $target);
 
-                $newFileName = $this -> createThumbnail($filename, 500);
+                $newFileName = $this -> createThumbnail($filename, 300);
                 
                 
                 //Delete prevImage

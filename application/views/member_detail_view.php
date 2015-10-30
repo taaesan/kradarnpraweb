@@ -308,36 +308,110 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         
 	<div class="col-md-6">
-	<table class="table table-hover">
-		<caption>
-			<?php if(!empty($memberRow)) { ?>
-				<?php echo $memberRow -> group_name; ?>
-			<?php } ?>
-		</caption>
-		<tbody>
-			
-			<?php if(!empty($memberRow)) { ?>
-			
-			<tr>
-				<td>หมายเลขสมาชิก</td>
-				<td><?php echo $memberRow -> member_num; ?></td>
-			</tr>
-			<tr>
-				<td>ชื่อเฟสบุ๊ค</td>
-				<td><?php echo $memberRow -> facebook_name; ?> </td>
-			</tr>
-			<tr>
-				<td>ชื่อ นามสกุล</td>
-				<td><?php echo $memberRow -> name; ?> <?php echo $memberRow -> surname; ?></td>
-			</tr>
-			<tr>
-				<td>ธนาคาร</td>
-				<td><?php echo $memberRow -> bank_name; ?> <?php echo $memberRow -> bank_account_number; ?></td>
-			</tr>
-			<?php } ?>
-			
-		</tbody>
-	</table>
+	  
+	<?php $loggedin = $this->session->userdata('loggedin');?>
+	
+	<?php if(!$loggedin){ ?>  
+    	<table class="table table-hover">
+    		<caption>
+    			<?php if(!empty($memberRow)) { ?>
+    				<?php echo $memberRow -> group_name; ?>
+    			<?php } ?>
+    		</caption>
+    		<tbody>
+    			
+    			<?php if(!empty($memberRow)) { ?>
+    			
+    			<tr>
+    				<td>หมายเลขสมาชิก</td>
+    				<td><?php echo $memberRow -> member_num; ?></td>
+    			</tr>
+    			<tr>
+    				<td>ชื่อเฟสบุ๊ค</td>
+    				<td><?php echo $memberRow -> facebook_name; ?> </td>
+    			</tr>
+    			<tr>
+    				<td>ชื่อ นามสกุล</td>
+    				<td><?php echo $memberRow -> name; ?> <?php echo $memberRow -> surname; ?></td>
+    			</tr>
+    			<tr>
+    				<td>ธนาคาร</td>
+    				<td><?php echo $memberRow -> bank_name; ?> <?php echo $memberRow -> bank_account_number; ?></td>
+    			</tr>
+    			<?php } ?>
+    			
+    		</tbody>
+    	</table>
+	<?php }else{
+	        $attributes = array('id' => 'requestForm');
+            echo form_open('member/updatemember', $attributes);
+	    ?>
+	    
+	    <input type="hidden" name="id" id="id" value="<?php echo $memberRow -> id; ?>" />
+	    <input type="hidden" name="memberNum" id="memberNum" value="<?php echo $memberRow -> member_num; ?>" />
+	    <input type="hidden" name="groupId" id="groupId" value="<?php echo $memberRow -> group_id; ?>" />
+        <table class="table table-hover">
+            <caption>
+                <?php if(!empty($memberRow)) { ?>
+                    <?php echo $memberRow -> group_name; ?>
+                <?php } ?>
+            </caption>
+            <tbody>
+                
+                <?php if(!empty($memberRow)) { ?>
+                
+                <tr>
+                    <td>หมายเลขสมาชิก</td>
+                    <td><?php echo $memberRow -> member_num; ?></td>
+                </tr>
+                <tr>
+                    <td>ชื่อเฟสบุ๊ค<?php echo form_error('fbName'); ?></td>
+                    <td><input type="text" class="form-control" id="fbName" name="fbName" value="<?php echo set_value('fbName', $memberRow -> facebook_name); ?>"/></td>
+                </tr>
+                <tr>
+                    <td>หมายเลขบัตร<?php echo form_error('cid'); ?></td>
+                    <td><input type="text" class="form-control" id="cid" name="cid" value="<?php echo set_value('cid', $memberRow -> cid); ?>"/></td>
+                </tr>                
+                <tr>
+                    <td>ชื่อ นามสกุล</td>
+                    <td><?php echo $memberRow -> name; ?> <?php echo $memberRow -> surname; ?></td>
+                </tr>
+                <tr>
+                    <td>ธนาคาร</td>
+                    <td>
+                        <select class="form-control" id="bankName" name="bankName">
+                            <option></option>
+                            <option value="ธนาคารกรุงเทพ" <?php echo set_select('bankName',  'ธนาคารกรุงเทพ', $memberRow -> bank_name == 'ธนาคารกรุงเทพ') ?> >ธนาคารกรุงเทพ</option>
+                            <option value="ธนาคารกรุงไทย" <?php echo set_select('bankName',  'ธนาคารกรุงไทย', $memberRow -> bank_name == 'ธนาคารกรุงไทย') ?> >ธนาคารกรุงไทย</option>
+                            <option value="ธนาคารกรุงศรีอยุธยา" <?php echo set_select('bankName',  'ธนาคารกรุงศรีอยุธยา', $memberRow -> bank_name == 'ธนาคารกรุงศรีอยุธยา') ?> >ธนาคารกรุงศรีอยุธยา</option>
+                            <option value="ธนาคารกสิกรไทย" <?php echo set_select('bankName',  'ธนาคารกสิกรไทย', $memberRow -> bank_name == 'ธนาคารกสิกรไทย') ?> >ธนาคารกสิกรไทย</option>
+                            <option value="ธนาคารไทยพาณิชย์" <?php echo set_select('bankName',  'ธนาคารไทยพาณิชย์', $memberRow -> bank_name == 'ธนาคารไทยพาณิชย์') ?> >ธนาคารไทยพาณิชย์</option>
+                            <option value="ธนาคารทหารไทย" <?php echo set_select('bankName',  'ธนาคารทหารไทย', $memberRow -> bank_name == 'ธนาคารทหารไทย') ?> >ธนาคารทหารไทย</option>
+                            <option value="ธนาคารออมสิน" <?php echo set_select('bankName',  'ธนาคารออมสิน', $memberRow -> bank_name == 'ธนาคารออมสิน') ?> >ธนาคารออมสิน</option>
+                            <option value="ธนาคารธนชาต" <?php echo set_select('bankName',  'ธนาคารธนชาต', $memberRow -> bank_name == 'ธนาคารธนชาต') ?> >ธนาคารธนชาต</option>
+                            <option value="CIMB" <?php echo set_select('bankName',  'CIMB', $memberRow -> bank_name == 'CIMB') ?> >CIMB</option>
+                        </select>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>หมายเลขบัญชีธนาคาร<?php echo form_error('accountNumber'); ?></td>
+                    <td><input type="text" class="form-control" placeholder="หมายเลขบัญชีธนาคาร" id="accountNumber" name="accountNumber" maxlength="20" value="<?php echo set_value('accountNumber', $memberRow -> bank_account_number); ?>"/></td>
+                </tr>                
+                
+                <?php } ?>
+                
+            </tbody>
+        </table>
+        
+        <button type="submit" class="btn btn-lg btn-success" id="submitButton">Save</button>
+        
+        </form>
+        
+        <h4> <?php echo "Hi ".$_SESSION['username'];?> <a href="member/logout">Logout</a></h4>
+        
+    <?php } ?>	
+	
+	
 	</div>
 	</div>
 	
@@ -352,9 +426,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div id="editView" class="thumbnail" style="margin-top: 10px;">
                 <div id="resp" class="alert alert-info" role="alert">ใส่เลขบัตรประชาชน 4 หลักสุดท้าย แล้ว เลือกภาพ</div>
                 <label for="cid">หมายเลขบัตรประจำตัวประชาชน</label>
-                <input type="text" class="form-control" placeholder="ตัวเลข 4 หลัก สุดท้ายของเลขที่บัตรประชาชน" maxlength="4" max="4" id="cid" name="cid">
+                <input type="password" class="form-control" placeholder="ตัวเลข 4 หลัก สุดท้ายของเลขที่บัตรประชาชน" maxlength="4" max="4" id="cid" name="cid">
                 <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="image1" id="image1"></span>
-                <div id="log"></div>
+                <!--<div id="log"></div>-->
             </div>
         </div>
 	    

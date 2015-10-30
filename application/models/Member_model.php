@@ -15,7 +15,7 @@ class Member_model extends CI_Model {
 		$this -> load -> database();
 
 		$this -> _query = 
-		  " select trim(concat((select max(member_prefix) from tb_group where id = ? ), gm.member_num)) member_num, m.facebook_name, m.name, m.surname , m.bank_name, m.bank_account_number, gm.group_id, m.picture4, m.id " 
+		  " select trim(concat((select max(member_prefix) from tb_group where id = ? ), gm.member_num)) member_num, m.facebook_name, m.name, m.surname , m.bank_name, m.bank_account_number, gm.group_id, m.picture4, m.id, m.cid " 
 		. " from tb_group_member_mapping gm inner join tb_member m " 
 		. " on gm.member_id = m.id where gm.group_id = ? ";
 
