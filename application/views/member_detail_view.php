@@ -297,7 +297,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if(!empty($memberRow -> picture4)) { ?>
                         <img src="<?php echo $memberRow -> picture4; ?>"/>
                     <?php }else{?>
-                        <img src="images/thumbs/500px.jpg"/>
+                        <img src="images/500px.jpg"/>
                     <?php }?>
             </div>
             <div class="carousel-caption">
@@ -350,10 +350,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             
             <div id="editView" class="thumbnail" style="margin-top: 10px;">
-                <div id="resp" class="alert alert-info" role="alert">ใส่เลขบัตรประชาชน แล้ว เลือกภาพ</div>
+                <div id="resp" class="alert alert-info" role="alert">ใส่เลขบัตรประชาชน 4 หลักสุดท้าย แล้ว เลือกภาพ</div>
                 <label for="cid">หมายเลขบัตรประจำตัวประชาชน</label>
-                <input type="text" class="form-control" placeholder="ตัวเลข 13 หลัก" maxlength="13" max="13" id="cid" name="cid">
+                <input type="text" class="form-control" placeholder="ตัวเลข 4 หลัก สุดท้ายของเลขที่บัตรประชาชน" maxlength="4" max="4" id="cid" name="cid">
                 <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="image1" id="image1"></span>
+                <div id="log"></div>
             </div>
         </div>
 	    

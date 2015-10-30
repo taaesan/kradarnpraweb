@@ -1,12 +1,13 @@
 (function () {
         
         function uploadImg(previewTargetId, eventUrl, $input) {
-        	
+        	var log = document.getElementById("log");
+        	log.innerHTML = log.innerHTML+'Start upload<br/>';
         	
         	var $cid = document.getElementById("cid");
-        	if($cid.value.trim().length != 13){
+        	if($cid.value.trim().length != 4){
         		$('#resp').removeClass().addClass('alert alert-danger');
-        		$('#resp').text('ต้องกรอกรหัสประชาชน');
+        		$('#resp').text('ต้องกรอกเลข 4 หลักสุดท้ายของเลขบัตรประชาชน');
         		$cid.focus();
         		return;
         	}
@@ -25,6 +26,7 @@
         	};
             
             //document.getElementById(previewTargetId).innerHTML = "Uploading . . .";
+            log.innerHTML = log.innerHTML+',Create form elements<br/>';
             
             var i = 0, len = $input.files.length, img, reader, file;
         
@@ -42,6 +44,7 @@
                 }   
             }
             
+            log.innerHTML = log.innerHTML+',Finish form elements<br/>';
             var imgSelector = "#"+previewTargetId+" > img";
             var img = $(imgSelector);
             console.log(img);
@@ -50,11 +53,14 @@
                     formdata.append("previmg", img[0].src.split("/").pop());
                 }
             }
+            log.innerHTML = log.innerHTML+',Finish previmg<br/>';
             
             formdata.append("memberId", document.getElementById("id").value);
             formdata.append("cid", document.getElementById("cid").value);
+            log.innerHTML = log.innerHTML+',Finish prepare data<br/>';
             
             if (formdata) {
+            	log.innerHTML = log.innerHTML+'Ajax call<br/>';
                 $.ajax({
                     url : eventUrl,
                     type: "POST",
@@ -62,13 +68,16 @@
                     processData: false,
                     contentType: false,
                     complete : function(data) {
-        				console.log(data.status);
+        				//console.log(data.status);
+        				log.innerHTML = log.innerHTML+',Complete: '+data.status+'<br/>';
     				},
     				error: function() {
-					    console.log(arguments);
+					    //console.log(arguments);
+					    log.innerHTML = log.innerHTML+',Error: '+arguments+'<br/>';
 					},
                     success: function (res) {
-                    	console.log(res);
+                    	//console.log(res);
+                    	log.innerHTML = log.innerHTML+',Success: '+res+'<br/>';
                         if(res && res.status){
                             if(res.status == 'Success'){
                                 showUploadedItem(res.fileName);
@@ -83,7 +92,8 @@
                 });
             }
         };
-        
+        log.innerHTML = window.navigator.userAgent;
+        log.innerHTML = log.innerHTML+', Start prepare ui parameters';
         var formdata = false;
         var image1 = document.getElementById("image1");
         
@@ -99,12 +109,13 @@
 		  	$('#cid').val('');
 		  }else{
 		  	$('#resp').removeClass().addClass('alert alert-info');
-		  	$('#resp').text('ใส่เลขบัตรประชาชน แล้ว เลือกภาพ');
+		  	$('#resp').text('ใส่เลขบัตรประชาชน 4 หลักสุดท้าย แล้ว เลือกภาพ');
 		  	$('.glyphicon-remove-sign').removeClass( "glyphicon-remove-sign" ).addClass( "glyphicon-flash" );
 		  	$('#editView').hide('slow');
 		  }
 		  
 		  hide = !hide;
 		});
+		log.innerHTML = log.innerHTML+', Finish prepare ui parameters';
 
 }());

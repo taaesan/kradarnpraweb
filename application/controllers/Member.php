@@ -414,26 +414,55 @@ class Member extends CI_Controller {
         if(isset($_POST['memberId']) && isset($_POST['cid'])){
             $memberId = $_POST['memberId'];
             $cid = $_POST['cid'];
+            
+            log_message('info', 'cid:'.$cid.', memberId:'.$memberId); 
             $memberRow = $this -> member_model -> getMemberById($memberId);
         
             if($memberRow != null){
                 
-                if($cid != $memberRow->cid){
-                    $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
-                    header('Content-Type: application/json');
-                    echo json_encode($arr);
-                    exit;
+                if(!empty($memberRow->cid)){
+                    
+                    //LOG
+                    log_message('info', $cid.' == '.substr($memberRow->cid, -4));                    
+                    
+                    if($cid != substr($memberRow->cid, -4)){
+                        $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
+                        header('Content-Type: application/json');
+                        
+                        //LOG
+                        log_message('info', json_encode($arr));
+                        
+                        echo json_encode($arr);
+                        exit;
+                    }
+                }else{
+                        $arr = array('status' => 'Error', 'message' => 'คุณไม่มีเลขที่บัตรในระบบ ติดต่อพี่แต้เพื่อแก้ไข');
+                        header('Content-Type: application/json');
+                        
+                        //LOG
+                        log_message('info', json_encode($arr));
+                        
+                        echo json_encode($arr);
+                        exit;
                 }
                 
             }else{
                 $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
                 header('Content-Type: application/json');
+                
+                //LOG
+                log_message('info', json_encode($arr)); 
+                               
                 echo json_encode($arr);
                 exit;
             }
             
         }else{
             $arr = array('status' => 'Error', 'message' => 'เสียใจ คุณไม่มีสิทธิ์เปลี่ยนแปลงข้อมุลสมาชิก');
+         
+            //LOG
+            log_message('info', json_encode($arr));
+ 
             
             header('Content-Type: application/json');
             echo json_encode($arr);
@@ -447,7 +476,10 @@ class Member extends CI_Controller {
             end($_FILES['images']['name']);
             $key = key($_FILES['images']['name']);
             
-            if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
+            //LOG
+            log_message('info', 'file key: ' + $_FILES['images']['name'][$key]);
+            
+            if (preg_match('/[.](jpg)|(jpeg)|(gif)|(png)$/', $_FILES['images']['name'][$key])) {
 
                 $filename = $_FILES['images']['name'][$key];
                 $source = $_FILES['images']['tmp_name'][$key];
@@ -490,12 +522,31 @@ class Member extends CI_Controller {
                 
                 $arr = array('fileName' => $newFileName, 'status' => 'Success', 'message' => 'สำเร็จ');
                 
+                //Log
+                log_message('info', json_encode($arr));                
+                
                 header('Content-Type: application/json');
                 echo json_encode($arr);
                 exit;
             }
         }
     }
+
+    public function viewlogs(){
+        
+        $logFiles = ($this -> uri -> segment(3)) ? $this -> uri -> segment(3) : '';
+        
+        if(strlen($logFiles) == 0){
+            $dir    = APPPATH.'logs';
+            $data = array();
+            $data['files'] = scandir($dir);
+            $this -> load -> view('logs_view', $data);
+        }else{
+            header('Content-Type: text/plain');
+            $this -> load -> ext_view('logs', $logFiles, null);
+        }
+    }
+
 
 	public function testupload() {
 
@@ -522,7 +573,7 @@ class Member extends CI_Controller {
 	function createThumbnail($filename, $width) {
 		$originalFile = $this -> path_to_image_directory . $filename;
 
-		if (preg_match('/[.](jpg)$/', $filename)) {
+		if (preg_match('/[.](jpg)|(jpeg)$/', $filename)) {
 			$im = imagecreatefromjpeg($originalFile);
 		} else if (preg_match('/[.](gif)$/', $filename)) {
 			$im = imagecreatefromgif($originalFile);

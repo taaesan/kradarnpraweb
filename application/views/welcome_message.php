@@ -10,7 +10,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<link rel="icon" href="../../favicon.ico">
 
 		<title>Theme Template for Bootstrap</title>
 
