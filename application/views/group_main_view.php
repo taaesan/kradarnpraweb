@@ -17,14 +17,21 @@
 				 
 			</p>
 			<p><a class="btn btn-default" href="#myModal1" role="button" data-toggle="modal">กฎกติกากลุ่ม</a></p>
+			<p><a class="btn btn-block btn-social btn-facebook" href="https://www.facebook.com/groups/sitluangpoonham/"> <i class="fa fa-facebook"></i> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a></p>
+			<p><button type="button" class="btn btn-success" onclick="location.href='member/request.html'">สมัครสมาชิก</button></p>
 
 		</div>
 		<div class="col-md-4">
-			<h3>ร่วมเป็นส่วนหนึ่งของเรา</h3>
-			<p>
-				<a class="btn btn-block btn-social btn-facebook" href="https://www.facebook.com/groups/sitluangpoonham/"> <i class="fa fa-facebook"></i> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a>
-			</p>
-			</p>
+			    <h3>รายชื่อสมาชิกที่มีรหัสล่าสุด</h3>
+			    <p>
+			    <table id="member-table" data-toggle="table" data-show-columns="false" data-url="member/lastmemberjson.html">
+                    <thead>
+                        <th data-field="member_num">รหัส</th>
+                        <th data-field="facebook_name">ชื่อเฟส</th>
+                    </thead>
+                </table>
+                </p>
+			   <button type="button" onclick="location.href='member'" class="btn btn-default">ดูเพิ่ม</button>
 		</div>
 	</div>
 	
@@ -150,6 +157,14 @@
 <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
 <script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script>
+    $(function() {
+        var $table = $('#member-table');
+        $table.bootstrapTable({});
+    });
+    
+</script>
 
 </body>
 </html>

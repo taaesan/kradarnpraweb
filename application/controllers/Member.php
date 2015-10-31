@@ -177,7 +177,7 @@ class Member extends CI_Controller {
             'bank_account_number' => $_POST['accountNumber'],
             'bank_name' => $_POST['bankName'],
 
-            'cid' => $_POST['cid']
+            'cid' => $_POST['hcid']
             );
                 
             $this -> member_model -> updateMember($memberId, $column);
@@ -715,6 +715,15 @@ class Member extends CI_Controller {
         }
         
         $requestRows = $this->member_model->getRequestMember();
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
+    
+    public function lastmemberjson(){
+        
+        $requestRows = $this->member_model->getMemberListDesc(1);
         
         header('Content-Type: application/json');
         echo json_encode($requestRows);

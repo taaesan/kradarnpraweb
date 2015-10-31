@@ -50,6 +50,44 @@ class Member_model extends CI_Model {
 		return $query -> result_array();
 	}
 	
+	public function getMemberListDesc($groupId){
+	    $param = array();
+        $param[0] = $groupId;
+        $param[1] = $groupId;
+        
+        
+        $queryStr =  
+          " select trim(concat((select max(member_prefix) from tb_group where id = ? ), gm.member_num)) member_num, m.facebook_name " 
+        . " from tb_group_member_mapping gm inner join tb_member m " 
+        . " on gm.member_id = m.id where gm.group_id = ? "
+        . " order by gm.member_num desc limit 5 ";
+        
+        
+        //2. Search with LIMIT
+        $query = $this -> db -> query($queryStr, array($groupId, $groupId));
+        return $query -> result_array();
+        
+	}
+	
+	public function getMemberList($groupId){
+        $param = array();
+        $param[0] = $groupId;
+        $param[1] = $groupId;
+        
+        
+        $queryStr =  
+          " select trim(concat((select max(member_prefix) from tb_group where id = ? ), gm.member_num)) member_num, m.facebook_name " 
+        . " from tb_group_member_mapping gm inner join tb_member m " 
+        . " on gm.member_id = m.id where gm.group_id = ? "
+        . " order by gm.member_num  ";
+        
+        
+        //2. Search with LIMIT
+        $query = $this -> db -> query($queryStr, array($groupId, $groupId));
+        return $query -> result_array();
+        
+    }
+	
 	public function getMemberDetail($groupId, $memberId){
 		
 		

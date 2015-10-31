@@ -3,6 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Item extends CI_Controller {
 
+
+
+    public function __construct() {
+        parent::__construct();
+        $this -> load -> helper('url');
+        $this -> load -> helper(array('form', 'url'));
+        $this -> load -> library('pagination');
+        $this -> load -> library('form_validation');
+
+        //load the department_model
+        $this -> load -> model('member_model');
+        //$this -> load -> library('member_dto');
+        $this -> load -> library('session');
+    }
+    
 	/**
 	 * Index Page for this controller.
 	 *
@@ -31,11 +46,19 @@ class Item extends CI_Controller {
 		$this->load->model('member_model');
 		
 		$data['item_types'] = $this->item_type_model->get_item_types(1);
-		$data['members'] = json_encode($this->member_model->get_member_num(1), JSON_UNESCAPED_UNICODE);
 		
 		$this->load->view('header');
 		$this->load->view('add_item_view', $data);
 	}
+    
+    
+    public function members(){
+        $requestRows = $this->member_model->getMemberList(1);
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
 	
 	
 	public function add()

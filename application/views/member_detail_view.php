@@ -370,7 +370,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </tr>
                 <tr>
                     <td>หมายเลขบัตร<?php echo form_error('cid'); ?></td>
-                    <td><input type="text" class="form-control" id="cid" name="cid" value="<?php echo set_value('cid', $memberRow -> cid); ?>"/></td>
+                    <td><input type="text" class="form-control" id="hcid" name="hcid" value="<?php echo set_value('hcid', $memberRow -> cid); ?>"/></td>
                 </tr>                
                 <tr>
                     <td>ชื่อ นามสกุล</td>

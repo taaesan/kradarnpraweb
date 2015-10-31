@@ -63,7 +63,32 @@
 		<script>
 		$(function() {
 			
-			var members_json = <?php echo $members; ?>;
+			var members_json = null;
+			
+			//Get avaliable ids
+			/*
+            $.ajax({
+                url : 'item/members',
+                type: "POST",
+                processData: false,
+                contentType: false,
+                error: function() {
+                    console.log(arguments);
+                },
+                success: function (res) {
+                    if(res){
+                        console.log(res);
+                        $memberNum.value = res[0].id;
+                        var avIds = '';
+                        for(i=0; i< res.length; i++){
+                            avIds = avIds + ", " + res[i].id 
+                        }
+                        
+                    } 
+                }
+            });
+            */
+			
 			
 			$('#datetimepicker1').datetimepicker({
 			 	format:'DD/MM/YYYY',
@@ -71,15 +96,17 @@
 			 });
 			
 			$('#itemSellerId').magicSuggest({
+			 	/*
 			 	allowDuplicates:false,
 			 	allowFreeEntries:false,
+			 	*/
 			 	maxSelection :1,
 				placeholder: 'รหัสสมาชิก หรือ ชื่อเฟส',
-		        data: members_json,
+		        data: 'item/members',
 		        valueField: 'member_num',
 		        displayField: 'facebook_name',
 		        renderer: function(data){
-		            return data.member_num + ' (<b>' + data.facebook_name + '</b>)';
+		            return data.member_num + ' (' + data.facebook_name + ')';
 		        },
 		        resultAsString: true    
             		
