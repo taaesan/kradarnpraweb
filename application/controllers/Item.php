@@ -14,6 +14,7 @@ class Item extends CI_Controller {
 
         //load the department_model
         $this -> load -> model('member_model');
+        $this -> load -> model('item_type_model');
         //$this -> load -> library('member_dto');
         $this -> load -> library('session');
     }
@@ -35,8 +36,9 @@ class Item extends CI_Controller {
 	 */
 	public function index()
 	{
-		
-		$this->initForm();
+		$data = array();
+		$this->load->view('header');
+        $this->load->view('item_main_view', $data);
 	}
 	
 	private function initForm(){
@@ -54,6 +56,16 @@ class Item extends CI_Controller {
     
     public function members(){
         $requestRows = $this->member_model->getMemberList(1);
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
+
+
+    public function typecountjson(){
+        
+        $requestRows = $this->item_type_model->get_type_count(1);
         
         header('Content-Type: application/json');
         echo json_encode($requestRows);
