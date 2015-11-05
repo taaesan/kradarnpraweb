@@ -71,6 +71,16 @@ class Item extends CI_Controller {
         echo json_encode($requestRows);
         exit;
     }
+    
+    
+    public function itemscurrentyear(){
+        
+        $requestRows = $this->item_type_model->get_item_count_by_year('2015');
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        exit;
+    }
 	
 	
 	public function add()

@@ -32,16 +32,26 @@
         
             
             
-            
+        <?php /*  
         <div class="row">
           <div class="col-xs-12 col-md-12">
               <div style="margin: 20px;">
                <canvas id="myChart" ></canvas>
                </div>
           </div>
+         */ ?>
           
         </div>
         
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+              <div style="margin: 20px;">
+                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+             </div>
+            </div>
+        </div>
+        
+        <!--
         <div class="row" style="margin-top: 10px">
             <div class="col-sm-6 col-md-4">
             <button type="button" class="btn btn-lg btn-success" id="submitButton">
@@ -49,7 +59,7 @@
             </button>
             </div>
         </div>
-            
+        -->
             
     </div>
 	 
@@ -89,6 +99,12 @@
 <script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
 <script type="text/javascript" src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
 <script src="bower_components/Chart.js/Chart.js"></script>
+
+
+<script src="bower_components/highcharts/highcharts.js"></script>
+<script src="bower_components/highcharts/themes/dark-unica.js"></script>
+
+
 
 <script>
 
@@ -158,9 +174,15 @@
 		
 		var $table = $('#member-table');
 		
-		$table.bootstrapTable({});
+        $table.on('post-body.bs.table', function () {
+                $table.bootstrapTable('mergeCells', {
+                    index: 0,
+                    field: 'type_group',
+                    rowspan: 6
+                });
+            });
 		
-		
+		/*
 		var data = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [
@@ -184,7 +206,79 @@
             
      // Get context with jQuery - using jQuery's .get() method.
         var ctx = $("#myChart").get(0).getContext("2d");
-        var myLineChart = new Chart(ctx).Line(data, options);       
+        var myLineChart = new Chart(ctx).Line(data, options);  
+        */
+        
+        
+        
+        
+        
+        
+        
+        //Begin Hichart 
+        var chart = new Highcharts.Chart({
+            
+            chart: {
+            renderTo: 'container',
+            type: 'line',
+            events: {
+                load: requestData
+            }},
+            title: {
+                text: 'รายการประมูล เหรียญสมปรารถนา 2558',
+                x: -20 //center
+            },
+            subtitle: {
+                text: '',
+                x: -20
+            },
+            xAxis: {
+                categories: ['มค', 'กพ', 'มีค', 'เมย', 'พค', 'มิย',
+                    'กค', 'สค', 'กย', 'ตค', 'พย', 'ธค']
+            },
+            yAxis: {
+                title: {
+                    text: ' จำนวณ(องค์) '
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }],
+                tickInterval:1
+            },
+            tooltip: {
+                valueSuffix: ' องค์ '
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: []
+        });//end highChart
+        
+        
+        function requestData() {
+            $.ajax({
+                url: 'item/itemscurrentyear',
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    
+                    $.each(data, function() {
+                        //console.log(this.type_name +' '+this.data);
+                        chart.addSeries({
+                          name: this.type_name,
+                          data: $.parseJSON(this.data)
+                        });
+                    });},
+                    cache: false
+                    });
+        }
+        
+             
 	    
     });//end main 
 </script>
