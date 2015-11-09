@@ -41,6 +41,17 @@ class Image_model extends CI_Model {
 	    $this->db->like('name', $file);
         $this -> db -> delete('tb_image');
     }
+    
+    public function deleteImageByMemberId($id){
+        $this->db->where('cid', $id);
+        $this -> db -> delete('tb_image');
+    }
+    
+    public function getImageByMemberId($id) {
+        $query = ' select name from tb_image where cid = ? limit 1 ';
+        $query = $this -> db -> query($query, array($id));
+        return $query -> row();
+    } 
 	
 	public function getTempMemberById($memberId){
 		
