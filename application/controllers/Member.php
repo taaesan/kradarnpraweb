@@ -600,27 +600,7 @@ class Member extends CI_Controller {
     }
 
 
-	public function testupload() {
 
-		$data = array();
-		
-		if (isset($_FILES['fupload'])) {
-			if (preg_match('/[.](jpg)|(gif)|(png)$/', $_FILES['fupload']['name'])) {
-
-				$filename = $_FILES['fupload']['name'];
-				$source = $_FILES['fupload']['tmp_name'];
-				$target = $this -> path_to_image_directory . $filename;
-
-				move_uploaded_file($source, $target);
-
-				$data['imageTag'] = $this -> createThumbnail($filename, 500);
-			}
-
-		}
-
-		$this -> load -> view('header');
-		$this -> load -> view('test_upload_file_view', $data);
-	}
 
 	function createThumbnail($filename, $width) {
 		$originalFile = $this -> path_to_image_directory . $filename;
@@ -775,6 +755,41 @@ class Member extends CI_Controller {
         
         header('Content-Type: application/json');
         echo json_encode($requestRows);
+    }
+    
+    public function deleteMember(){
+        
+        $loggedin = $this->session->userdata('loggedin');
+        
+        if(!$loggedin){
+            redirect('member/admin');
+            exit;
+        }
+                    
+        $memberId  = $_POST['memberId'];
+        
+        $imageRow = $this->image_model->getImageByMemberId($memberId);
+        
+        if($imageRow != null){
+            $deleteImg = $imageRow->name;
+            
+            //Remove original file
+            if (file_exists($deleteImg)) {
+                unlink($deleteImg);
+            }
+            
+            //Delete prevImg from db
+            $this->image_model->deleteImageByMemberId($memberId);
+            
+            $this->member_model->deleteMember($memberId);
+        }
+        
+        //update a new data
+        $requestRows = $this->member_model->getRequestMember();
+        
+        header('Content-Type: application/json');
+        echo json_encode($requestRows);
+        
     }
 
 }

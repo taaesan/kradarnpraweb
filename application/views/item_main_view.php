@@ -220,7 +220,7 @@
             
             chart: {
             renderTo: 'container',
-            type: 'line',
+            type: 'spline',
             events: {
                 load: requestData
             }},

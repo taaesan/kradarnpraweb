@@ -113,7 +113,12 @@ class Member_model extends CI_Model {
 	
 	public function updateMember($id, $columns){
 	    $this -> db -> where('id', $id);
-        $this -> db -> update('tb_member', $columns);
+        $this -> db -> update('tb_member');
+    }
+    
+    public function deleteMember($id){
+        $this -> db -> where('id', $id);
+        $this -> db -> delete('tb_member');
     }
 	
 	public function getTempMemberById($memberId){
