@@ -17,6 +17,7 @@
 					<th data-field="id">รหัส</th>
 					<th data-field="facebook_name">ชื่อเฟส</th>
 					<th data-field="name">ชื่อ นามสกุล</th>
+					<th data-field="picture1|picture2|piecture3" data-formatter="priceFormatter">status</th>
 				</thead>
 
 			</table>
@@ -29,19 +30,19 @@
 				<div class="panel-heading">
 					ข้อมูล
 				</div>
-				
+
 				<div class="row" style="margin-top: 10px">
-                    <div class="col-sm-3 col-md-3">
-                        <button type="button" class="btn btn-lg btn-success" id="submitButton">
-                            บันทึก
-                        </button>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <button type="button" class="btn btn-lg btn-danger" id="deleteButton">
-                            ลบข้อมูล
-                        </button>
-                    </div>
-                </div>
+					<div class="col-sm-3 col-md-3">
+						<button type="button" class="btn btn-lg btn-success" id="submitButton">
+							บันทึก
+						</button>
+					</div>
+					<div class="col-sm-3 col-md-3">
+						<button type="button" class="btn btn-lg btn-danger" id="deleteButton">
+							ลบข้อมูล
+						</button>
+					</div>
+				</div>
 
 				<table class="table table-hover">
 					<caption>
@@ -108,223 +109,226 @@
 
 				</div>
 
-
-
 			</div>
 
 		</div>
-
-		<!-- Footer -->
-		<!--
-		<hr>
-		<div class="row">
-		<div class="col-lg-12">
-		<ul class="nav nav-pills nav-justified">
-		<li>
-		<a href="/">กระดานพระ</a>
-		</li>
-		<li>
-		<a href="#">Terms of Service</a>
-		</li>
-		<li>
-		<a href="#">Privacy</a>
-		</li>
-		</ul>
-		</div>
-		</div>
-		-->
-
 	</div>
+	
+	
+	       <!-- Footer -->
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="/">กระดานพระ</a>
+                    </li>
+                    <li>
+                        <a href="#">Terms of Service</a>
+                    </li>
+                    <li>
+                        <a href="#">Privacy</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Footer -->
+</div><!-- End container ->
 
-	<!-- Main jumbotron for a primary marketing message or call to action -->
+<!-- Main jumbotron for a primary marketing message or call to action -->
 
-	<!-- Bootstrap core JavaScript
-	================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="bower_components/magicsuggest/magicsuggest-min.js"></script>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bower_components/magicsuggest/magicsuggest-min.js"></script>
 
-	<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
-	<script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-	<script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
-	<script type="text/javascript" src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/locale/th.js"></script>
+<script type="text/javascript" src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
 
-	<script>
-		$(function() {
+<script>
+	function priceFormatter(value, row) {
+		var picture = row.picture1 + row.picture2 + row.picture3;
+		var icon = picture.trim().length > 0 ? 'glyphicon-star' : ''
+		return '<i class="glyphicon ' + icon + '"></i> ';
+	}
 
-			var $fbName = document.getElementById('fbName');
-			var $name = document.getElementById('name');
-			var $cid = document.getElementById('cid');
-			var $gender = document.getElementById('gender');
-			var $birthDate = document.getElementById('birthDate');
-			var $address = document.getElementById('address');
-			var $phone = document.getElementById('phone');
-			var $bank = document.getElementById('bank');
-			var $picture1 = document.getElementById('picture1');
-			var $picture2 = document.getElementById('picture2');
-			var $picture3 = document.getElementById('picture3');
-			var $memberNum = document.getElementById('memberNum');
-			var $memberId = document.getElementById('memberId');
-			var $editLink = document.getElementById('editLink');
-			var $avaliableIds = $('#avaliableIds');
-			var $data = {};
+	$(function() {
 
-			$("#submitButton").click(function() {
+		var $fbName = document.getElementById('fbName');
+		var $name = document.getElementById('name');
+		var $cid = document.getElementById('cid');
+		var $gender = document.getElementById('gender');
+		var $birthDate = document.getElementById('birthDate');
+		var $address = document.getElementById('address');
+		var $phone = document.getElementById('phone');
+		var $bank = document.getElementById('bank');
+		var $picture1 = document.getElementById('picture1');
+		var $picture2 = document.getElementById('picture2');
+		var $picture3 = document.getElementById('picture3');
+		var $memberNum = document.getElementById('memberNum');
+		var $memberId = document.getElementById('memberId');
+		var $editLink = document.getElementById('editLink');
+		var $avaliableIds = $('#avaliableIds');
+		var $data = {};
 
-				if ($memberNum.value.length > 0 && $memberId.value.length) {
+		$("#submitButton").click(function() {
 
-					var jsonData = {
-						"memberNum" : $memberNum.value,
-						"memberId" : $memberId.value
-					};
-					console.log(jsonData);
-					//Get avaliable ids
-					$.ajax({
-						url : "member/approve",
-						type : "POST",
-						dataType : 'json',
-						data : jsonData,
-						error : function(e) {
-							console.log(JSON.stringify(e, null, 4));
-						},
-						success : function(res) {
-							if (res) {
+			if ($memberNum.value.length > 0 && $memberId.value.length) {
 
-								$fbName.innerHTML = '';
-								$name.innerHTML = '';
-								$cid.innerHTML = '';
-								$gender.innerHTML = '';
-								$birthDate.innerHTML = '';
-								$address.innerHTML = '';
-								$phone.innerHTML = '';
-								$bank.innerHTML = '';
-								$memberId.value = '';
-								$picture1.src = '';
-								$picture2.src = '';
-								$picture3.src = '';
-
-								$table.bootstrapTable("load", res);
-							}
-						}
-					});
-				}
-
-			});
-			
-		    $("#deleteButton").click(function() {
-
-                if ($memberNum.value.length > 0 && $memberId.value.length) {
-                    
-                    var jsonData = {
-                        "memberNum" : $memberNum.value,
-                        "memberId" : $memberId.value
-                    };
-                    console.log(jsonData);
-                    //Get avaliable ids
-                    $.ajax({
-                        url : "member/deleteMember",
-                        type : "POST",
-                        dataType : 'json',
-                        data : jsonData,
-                        error : function(e) {
-                            console.log(JSON.stringify(e, null, 4));
-                        },
-                        success : function(res) {
-                            if (res) {
-
-                                $fbName.innerHTML = '';
-                                $name.innerHTML = '';
-                                $cid.innerHTML = '';
-                                $gender.innerHTML = '';
-                                $birthDate.innerHTML = '';
-                                $address.innerHTML = '';
-                                $phone.innerHTML = '';
-                                $bank.innerHTML = '';
-                                $memberId.value = '';
-                                $picture1.src = '';
-                                $picture2.src = '';
-                                $picture3.src = '';
-
-                                $table.bootstrapTable("load", res);
-                            }
-                        }
-                    });
-                    
-                }      
-             });//end deleteMember
-			
-
-			var $table = $('#member-table');
-
-			$table.bootstrapTable({
-
-			}).on('click-row.bs.table', function(e, row, $element) {
-
+				var jsonData = {
+					"memberNum" : $memberNum.value,
+					"memberId" : $memberId.value
+				};
+				console.log(jsonData);
 				//Get avaliable ids
 				$.ajax({
-					url : 'member/getavaliableids',
+					url : "member/approve",
 					type : "POST",
-					processData : false,
-					contentType : false,
-					error : function() {
-						console.log(arguments);
+					dataType : 'json',
+					data : jsonData,
+					error : function(e) {
+						console.log(JSON.stringify(e, null, 4));
 					},
 					success : function(res) {
 						if (res) {
-							console.log(res);
-							$memberNum.value = res[0].id;
-							var avIds = '';
-							for ( i = 0; i < res.length; i++) {
-								avIds = avIds + ", " + res[i].id
-							}
-							$avaliableIds.text(avIds);
+
+							$fbName.innerHTML = '';
+							$name.innerHTML = '';
+							$cid.innerHTML = '';
+							$gender.innerHTML = '';
+							$birthDate.innerHTML = '';
+							$address.innerHTML = '';
+							$phone.innerHTML = '';
+							$bank.innerHTML = '';
+							$memberId.value = '';
+							$picture1.src = '';
+							$picture2.src = '';
+							$picture3.src = '';
+
+							$table.bootstrapTable("load", res);
+						}
+					}
+				});
+			}
+
+		});
+
+		$("#deleteButton").click(function() {
+
+			if ($memberNum.value.length > 0 && $memberId.value.length) {
+
+				var jsonData = {
+					"memberNum" : $memberNum.value,
+					"memberId" : $memberId.value
+				};
+				console.log(jsonData);
+				//Get avaliable ids
+				$.ajax({
+					url : "member/deleteMember",
+					type : "POST",
+					dataType : 'json',
+					data : jsonData,
+					error : function(e) {
+						console.log(JSON.stringify(e, null, 4));
+					},
+					success : function(res) {
+						if (res) {
+
+							$fbName.innerHTML = '';
+							$name.innerHTML = '';
+							$cid.innerHTML = '';
+							$gender.innerHTML = '';
+							$birthDate.innerHTML = '';
+							$address.innerHTML = '';
+							$phone.innerHTML = '';
+							$bank.innerHTML = '';
+							$memberId.value = '';
+							$picture1.src = '';
+							$picture2.src = '';
+							$picture3.src = '';
+
+							$table.bootstrapTable("load", res);
 						}
 					}
 				});
 
-				$editLink.href = 'member/uploaddoc/' + row.id + '.html';
-				$editLink.innerHTML = row.id;
-				$fbName.innerHTML = row.facebook_name;
-				$name.innerHTML = row.name;
-				$cid.innerHTML = row.cid;
-				$gender.innerHTML = row.gender;
-				$birthDate.innerHTML = row.birth_date;
-				$address.innerHTML = row.address;
-				$phone.innerHTML = row.phone_number;
-				$bank.innerHTML = row.bank_name;
-				$memberId.value = row.id;
-
-				if (row.picture1.length > 0) {
-					$picture1.style.visibility = 'visible';
-					$picture1.src = row.picture1;
-				} else {
-					$picture1.style.visibility = 'hidden';
-				}
-
-				if (row.picture2.length > 0) {
-					$picture2.style.visibility = 'visible';
-					$picture2.src = row.picture2;
-				} else {
-					$picture2.style.visibility = 'hidden';
-				}
-
-				if (row.picture3.length > 0) {
-					$picture3.style.visibility = 'visible';
-					$picture3.src = row.picture3;
-				} else {
-					$picture3.style.visibility = 'hidden';
-				}
-
-			}).on('load-success.bs.table', function(e, data) {
-				console.log(data);
-			});
-			//end row click
-
+			}
 		});
-		//end main
-	</script>
+		//end deleteMember
 
-	</body>
-	</html>
+		var $table = $('#member-table');
+
+		$table.bootstrapTable({
+
+		}).on('click-row.bs.table', function(e, row, $element) {
+
+			//Get avaliable ids
+			$.ajax({
+				url : 'member/getavaliableids',
+				type : "POST",
+				processData : false,
+				contentType : false,
+				error : function() {
+					console.log(arguments);
+				},
+				success : function(res) {
+					if (res) {
+						console.log(res);
+						$memberNum.value = res[0].id;
+						var avIds = '';
+						for ( i = 0; i < res.length; i++) {
+							avIds = avIds + ", " + res[i].id
+						}
+						$avaliableIds.text(avIds);
+					}
+				}
+			});
+
+			$editLink.href = 'member/uploaddoc/' + row.id + '.html';
+			$editLink.innerHTML = row.id;
+			$fbName.innerHTML = row.facebook_name;
+			$name.innerHTML = row.name;
+			$cid.innerHTML = row.cid;
+			$gender.innerHTML = row.gender;
+			$birthDate.innerHTML = row.birth_date;
+			$address.innerHTML = row.address;
+			$phone.innerHTML = row.phone_number;
+			$bank.innerHTML = row.bank_name;
+			$memberId.value = row.id;
+
+			if (row.picture1.length > 0) {
+				$picture1.style.visibility = 'visible';
+				$picture1.src = row.picture1;
+			} else {
+				$picture1.style.visibility = 'hidden';
+			}
+
+			if (row.picture2.length > 0) {
+				$picture2.style.visibility = 'visible';
+				$picture2.src = row.picture2;
+			} else {
+				$picture2.style.visibility = 'hidden';
+			}
+
+			if (row.picture3.length > 0) {
+				$picture3.style.visibility = 'visible';
+				$picture3.src = row.picture3;
+			} else {
+				$picture3.style.visibility = 'hidden';
+			}
+
+		}).on('load-success.bs.table', function(e, data) {
+			console.log(data);
+		});
+		//end row click
+
+	});
+	//end main
+</script>
+
+</body>
+</html>
 
