@@ -781,8 +781,11 @@ class Member extends CI_Controller {
             //Delete prevImg from db
             $this->image_model->deleteImageByMemberId($memberId);
             
-            $this->member_model->deleteMember($memberId);
+            
         }
+        
+        //Delete the member row
+        $this->member_model->deleteMember($memberId);
         
         //update a new data
         $requestRows = $this->member_model->getRequestMember();
