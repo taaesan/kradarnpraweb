@@ -255,7 +255,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</li>
 						-->
 						<li id="menu3">
-							<a href="member.html">สมาชิกกลุ่ม</a>
+							<a href="member.html">สมาชิกกลุ่มแบบมีหมายเลข</a>
 						</li>
 						<li id="menu4">
 							<a href="member/request.html">

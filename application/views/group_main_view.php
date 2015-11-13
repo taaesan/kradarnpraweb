@@ -5,7 +5,7 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<div class="col-md-4">
-			<h2>สมาชิก > 15,000 คน</h2>
+			<h2>สมาชิกทั่วไป > 15,000 คน</h2>
 			<p>
 				ในกลุ่มมีความเคลื่อนไหวสูง มีกิจกรรมอย่างต่อเนื่อง โดยเฉพาะ การเปิดประมูล การเช่าหาพระเครื่องวัตถุมงคล สายหลวงปู่นาม วัดน้อยชมภู่
 			</p>
@@ -14,7 +14,7 @@
 			<h2>กลุ่มมีมาตรฐานสูง</h2>
 			<p>
 				ในกลุ่มมีสมาชิกมีคุณภาพ ช่วยกันดูแลอย่างทั่วถึง มีกฎระเบียบที่ชัดเจนและสมาชิกมีความรู้ความเข้าใจเป็นอย่างดี
-				 
+				
 			</p>
 			<p><a class="btn btn-default" href="#myModal1" role="button" data-toggle="modal">กฎกติกากลุ่ม</a></p>
 			<p><a class="btn btn-block btn-social btn-facebook" href="https://www.facebook.com/groups/sitluangpoonham/"> <i class="fa fa-facebook"></i> ศิษย์หลวงปู่นาม วัดน้อยชมภู่ </a></p>

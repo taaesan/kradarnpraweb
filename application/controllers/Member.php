@@ -233,6 +233,7 @@ class Member extends CI_Controller {
 		$this -> pagination -> initialize($pageConfig);
 
 		$data['result'] = $this -> member_model -> getData($groupId, $searchText, $pageConfig['per_page'], $data['page']);
+        $data['total'] = $totalRows;
 		if ($searchText == null) {
 			$data['links'] = $this -> pagination -> create_links();
 		}
