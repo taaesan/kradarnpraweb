@@ -40,6 +40,28 @@ class Item extends CI_Controller {
 		$this->load->view('header');
         $this->load->view('item_main_view', $data);
 	}
+    
+    
+    public function itemtype()
+    {
+        $data = array();
+        //$this->load->view('header');
+        $this->load->view('item_type_view', $data);
+    }
+    
+        public function itemtype2()
+    {
+        $data = array();
+        //$this->load->view('header');
+        $this->load->view('item_type_view2', $data);
+    }
+    
+    public function parallax()
+    {
+        $data = array();
+        //$this->load->view('header');
+        $this->load->view('paralax', $data);
+    }
 	
 	private function initForm(){
 		$this->load->helper(array('form', 'url'));
