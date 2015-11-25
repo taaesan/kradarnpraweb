@@ -28,17 +28,46 @@
     <div class="panel panel-default" style="margin-top: 10px; padding: 5px;">
             <!-- Default panel contents -->
             <div class="panel-heading">ข้อมูล</div>
-            <div class="panel-body">
-                <p>...</p>
-            </div>
-            <img src="images/som5.jpg" class="img-responsive" width="200px"/>
-          
-    </div>
         
+            
+            
+        <?php /*  
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+              <div style="margin: 20px;">
+               <canvas id="myChart" ></canvas>
+               </div>
+          </div>
+         */ ?>
+          
+        </div>
+        
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+              <div style="margin: 20px;">
+                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+             </div>
+            </div>
+        </div>
+        
+        <!--
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-6 col-md-4">
+            <button type="button" class="btn btn-lg btn-success" id="submitButton">
+                บันทึก
+            </button>
+            </div>
+        </div>
+        -->
+            
+    </div>
+	 
+
 
 
 
 <!-- Footer -->
+<hr>
 <div class="row">
     <div class="col-lg-12">
         <ul class="nav nav-pills nav-justified">
@@ -53,7 +82,7 @@
 
 
 
-</div><!--End container-->
+</div>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 
@@ -186,7 +215,6 @@
         
         
         //Begin Hichart 
-        /*
         var chart = new Highcharts.Chart({
             
             chart: {
@@ -248,7 +276,6 @@
                     cache: false
                     });
         }
-        */
         
              
 	    

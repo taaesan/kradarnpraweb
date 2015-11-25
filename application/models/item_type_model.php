@@ -25,7 +25,7 @@ class Item_type_model extends CI_Model {
                 ' select max(type.name) type_group, type.type_name, count(item.id) counter '
                 .'from ( '
                 .'    select t.*, g.name' 
-                .'    from tb_item_type t inner join tb_item_type_group g '
+                .'    from tb_item_type t inner join tb_item_type_main g '
                 .'    on t.item_type_group_id = g.id '
                 .'    where g.group_id = ? ) type'
                 .' left join tb_item item on type.id = item.item_type_id group by type.type_name';
