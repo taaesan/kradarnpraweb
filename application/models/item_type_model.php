@@ -18,6 +18,13 @@ class Item_type_model extends CI_Model {
                 return $query->result_array();
         }
         
+        public function get_item_type_main($groupId)
+        {
+                $sql = "select * from tb_item_type_main where group_id = ?";
+                $query = $this->db->query($sql, array($groupId));
+                return $query->result_array();
+        }
+        
         public function get_type_count($groupId)
         {
                 $sql = 

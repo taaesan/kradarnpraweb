@@ -1,12 +1,37 @@
 <div class="container">
     
-    <div>
-     <div class="col-md-12 col-lg-12">
-                <h2><?php echo $item_types_header -> name; ?></h2>
-                 <p>พ.ศ.<?php echo $item_types_header -> year; ?></p>
-        </div>   
-        
+    <div class="row form-group">
+        <div class="col-xs-12 col-lg-12">
+            <!--
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                -->
+                    <a href="item.html"><?php echo $item_types_header -> name; ?></a>
+                <!--</div>
+            </div>  --> 
+        </div>
     </div>
+    
+    <!--
+    <div class="row form-group">
+        <div class="col-xs-12 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-image">
+                    <img src="images/som3.jpg" class="panel-image-preview" />
+                </div>
+                <div class="panel-body">
+                    <h4>เหรียญสมปรารถนา</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in lobortis nisl, vitae iaculis sapien. Phasellus ultrices gravida massa luctus ornare. Suspendisse blandit quam elit, eu imperdiet neque semper et.
+                    </p>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="#share">รายการจัดสร้าง</a>
+                </div>
+            </div>
+        </div>
+    </div>    
+    -->
 
 	<?php 
             $count = count($item_types);
@@ -14,26 +39,31 @@
 		    for($i = 0; $i < $count; $i++ ){
 	?>
 
-	<?php if($i % 4 == 0){
-	?>
-	<div class="row">
+	<?php if($i % 4 == 0){?>
+	<div class="row form-group">
 		<!--Begin Row-->
-		<div class="col-md-4 col-lg-3">
-			<div class="thumbnail">
-				<img src="images/som5.jpg" class="img-responsive"/>
-				<h3><?php echo $item_types[$i]['type_name']; ?>
-				<?php echo $item_types[$i]['batch_number']; ?> เหรียญ</h3>
+		<div class="col-xs-12 col-md-4 col-lg-3">
+			<div class="panel panel-default">
+			    <div class="panel-image">
+				    <img src="images/som5.jpg" class="panel-image-preview"/>
+				</div>
+				<div class="carousel-caption" style="padding-bottom: 50px"><h4><?php echo $item_types[$i]['batch_number']; ?> เหรียญ</h4></div>
+				<div class="panel-footer text-center">
+				<b><?php echo $item_types[$i]['type_name']; ?></b></div>
 			</div>
 		</div>
 
 		<?php } else { ?>
 
-		<div class="col-md-4 col-lg-3">
-			<div class="thumbnail">
-				<img src="images/som5.jpg" class="img-responsive"/>
-				<h3><?php echo $item_types[$i]['type_name']; ?>
-				<?php echo $item_types[$i]['batch_number']; ?> เหรียญ </h3>
-
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-image">
+                    <img src="images/som5.jpg" class="panel-image-preview"/>
+                </div>
+                <div class="carousel-caption" style="padding-bottom: 50px"><h4><?php echo $item_types[$i]['batch_number']; ?> เหรียญ</h4></div>
+                <div class="panel-footer text-center">
+				<b><?php echo $item_types[$i]['type_name']; ?></b>
+                </div>
 			</div>
 		</div>
 
@@ -44,6 +74,26 @@
 	<?php } ?>
 
 	<?php } ?>
+	
+	
+	
+    <!-- Footer -->
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <a href="/">กระดานพระ</a>
+                </li>
+                <li>
+                    <a href="#">Terms of Service</a>
+                </li>
+                <li>
+                    <a href="#">Privacy</a>
+                </li>
+            </ul>
+        </div>
+    </div>	
+	
 </div><!--End container-->
 
 <!-- Footer -->
@@ -83,8 +133,9 @@
 
 <script>
 	$(function() {
+	    $('#menu5').addClass("active");
 
-	});
+	}); 
 </script>
 
 </body>

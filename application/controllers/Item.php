@@ -34,6 +34,10 @@ class Item extends CI_Controller {
      */
     public function index() {
         $data = array();
+        
+        $data['item_type_main'] = $this -> item_type_model -> get_item_type_main(1);
+        
+        
         $this -> load -> view('header');
         $this -> load -> view('item_main_view', $data);
     }

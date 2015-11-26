@@ -236,6 +236,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				min-height: 2000px;
 				padding-top: 60px;
 			}
+			
+			
+            .panel-image img.panel-image-preview {
+                width: 100%;
+                border-radius: 4px 4px 0px 0px;
+            }
+            
+            .panel-heading ~ .panel-image img.panel-image-preview {
+                border-radius: 0px;
+            }
+            
+            .panel-image ~ .panel-body, .panel-image.hide-panel-body ~ .panel-body {
+                overflow: hidden;
+            }
+            .panel-image ~ .panel-footer a {
+                padding: 0px 10px;
+                font-size: 1.3em;
+                color: rgb(100, 100, 100);
+            }
+            
+            .panel-image.hide-panel-body ~ .panel-body {
+                height: 0px;
+                padding: 0px;
+            }
 
 		</style>
 
@@ -294,18 +318,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<li id="menu4">
 							<a href="member/request.html"> <span class="label label-success">สมัครสมาชิก</span> </a>
 						</li>
-						<li>
-							<!--
-							<form class="navbar-form navbar-left" role="search">
-
-							<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search">
-							</div>
-
-							<a class="btn btn-social-icon btn-facebook"> <i class="fa fa-facebook"></i> </a>
-							</form>
-							-->
-						</li>
+                        <li id="menu5">
+                            <a href="item.html">วัตถุมงคล</a>
+                        </li>
+						<?php /*
 						<li role="presentation" class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> วัตถุมงคล <span class="caret"></span> </a>
 							<ul class="dropdown-menu">
@@ -322,6 +338,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								-->
 							</ul>
 						</li>
+                         * 
+                         */?>
 
 					</ul>
 					<form class="navbar-form navbar-right" role="search">
