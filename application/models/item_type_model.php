@@ -41,6 +41,11 @@ class Item_type_model extends CI_Model {
                 return $query->result_array();
         } 
         
+        public function add_item_type_main($columns){
+
+            $this -> db -> insert('tb_item_type_main', $columns);
+        }
+        
         
         public function get_item_count_by_year($year){
             $sql = 
@@ -80,14 +85,14 @@ class Item_type_model extends CI_Model {
 
         public function get_item_by_type_main($groupId, $typeMainId)
         {
-                $sql = "select tb_item_type.* from tb_item_type_main inner join tb_item_type where tb_item_type_main.group_id = ? and tb_item_type_main.id = ? order by batch_number asc";
+                $sql = 'select tb_item_type.* from tb_item_type_main inner join tb_item_type on tb_item_type_main.id = tb_item_type.item_type_group_id where tb_item_type_main.group_id = ? and tb_item_type_main.id = ? order by batch_number asc';
                 $query = $this->db->query($sql, array($groupId, $typeMainId));
                 return $query->result_array();
         }
         
         public function get_item_by_type_main_desc($groupId, $typeMainId)
         {
-                $sql = "select tb_item_type_main.* from tb_item_type_main where tb_item_type_main.group_id = ? and tb_item_type_main.id = ?";
+                $sql = 'select tb_item_type_main.* from tb_item_type_main where tb_item_type_main.group_id = ? and tb_item_type_main.id = ? ';
                 $query = $this->db->query($sql, array($groupId, $typeMainId));
                 return $query -> row();
         }

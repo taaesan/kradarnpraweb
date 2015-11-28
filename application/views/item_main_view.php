@@ -6,6 +6,30 @@
 	<div class="row form-group">
 		<div class="col-sm-12 col-md-12">
 			<h4> <?php echo "Hi " . $_SESSION['username']; ?> <a href="member/logout">Logout</a></h4>
+			
+			<form action="item/do_upload" method="post" enctype="multipart/form-data">
+			    <div class="form-group">
+                    <label for="itemClosePrice">ชื่อวัตถุมงคล</label>
+                    <input type="text" class="form-control" id="itemName" name="itemName" value=""/>
+                </div> 
+                <div class="form-group">
+                    <label for="itemClosePrice">รายละเอียด</label>
+                    <input type="text" class="form-control" id="desc" name="desc" value=""/>
+                </div> 
+                <div class="form-group">
+                    <label for="itemClosePrice">ปี</label>
+                    <input type="text" class="form-control" id="year" name="year" value=""/>
+                </div> 
+                <div class="form-group">
+                    <label for="itemClosePrice">รูป</label>
+                    <span class="btn btn-default btn-file">เลือกภาพ<input type="file" name="images" id="images"></span>
+                </div>                                 
+                
+                <div class="form-group">
+			    <button type="submit" class="btn btn-default">Add</button>
+			    </div>
+			</form>
+			
 		</div>
 	</div>
 	<?php } ?>
@@ -23,14 +47,14 @@
             <div class="col-xs-12 col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-image">
-                        <img src="images/som3.jpg" class="panel-image-preview" />
+                        <img src="<?php echo $item_type_main[$i]['picture1']; ?>" class="panel-image-preview" />
                     </div>
                     <div class="panel-body">
-                        <a href="item/itemtype/<?php echo $item_type_main[$i]['id'];?>">รายการจัดสร้างแต่ละเนื้อ</a>
-                        <p><?php echo $item_type_main[$i]['desc'];?></p>
+                        <a href="item/itemtype/<?php echo $item_type_main[$i]['id']; ?>">รายการจัดสร้างแต่ละเนื้อ</a>
+                        <p><?php echo $item_type_main[$i]['desc']; ?></p>
                     </div>
                     <div class="panel-heading text-center">
-                        <b><?php echo $item_type_main[$i]['name'];?></b>
+                        <b><?php echo $item_type_main[$i]['name']; ?></b>
                     </div>
                 </div>
             </div>
@@ -81,10 +105,10 @@
 
 <script>
 	$(function() {
-	    
-	    $('#menu5').addClass("active");
 
-        /*
+		$('#menu5').addClass("active");
+
+		/*
 		var $fbName = document.getElementById('fbName');
 		var $name = document.getElementById('name');
 		var $cid = document.getElementById('cid');
@@ -104,54 +128,54 @@
 
 		$("#submitButton").click(function() {
 
-			if ($memberNum.value.length > 0 && $memberId.value.length) {
+		if ($memberNum.value.length > 0 && $memberId.value.length) {
 
-				var jsonData = {
-					"memberNum" : $memberNum.value,
-					"memberId" : $memberId.value
-				};
-				console.log(jsonData);
-				//Get avaliable ids
-				$.ajax({
-					url : "member/approve",
-					type : "POST",
-					dataType : 'json',
-					data : jsonData,
-					error : function(e) {
-						console.log(JSON.stringify(e, null, 4));
-					},
-					success : function(res) {
-						if (res) {
+		var jsonData = {
+		"memberNum" : $memberNum.value,
+		"memberId" : $memberId.value
+		};
+		console.log(jsonData);
+		//Get avaliable ids
+		$.ajax({
+		url : "member/approve",
+		type : "POST",
+		dataType : 'json',
+		data : jsonData,
+		error : function(e) {
+		console.log(JSON.stringify(e, null, 4));
+		},
+		success : function(res) {
+		if (res) {
 
-							$fbName.innerHTML = '';
-							$name.innerHTML = '';
-							$cid.innerHTML = '';
-							$gender.innerHTML = '';
-							$birthDate.innerHTML = '';
-							$address.innerHTML = '';
-							$phone.innerHTML = '';
-							$bank.innerHTML = '';
-							$memberId.value = '';
-							$picture1.src = '';
-							$picture2.src = '';
-							$picture3.src = '';
+		$fbName.innerHTML = '';
+		$name.innerHTML = '';
+		$cid.innerHTML = '';
+		$gender.innerHTML = '';
+		$birthDate.innerHTML = '';
+		$address.innerHTML = '';
+		$phone.innerHTML = '';
+		$bank.innerHTML = '';
+		$memberId.value = '';
+		$picture1.src = '';
+		$picture2.src = '';
+		$picture3.src = '';
 
-							$table.bootstrapTable("load", res);
-						}
-					}
-				});
-			}
+		$table.bootstrapTable("load", res);
+		}
+		}
+		});
+		}
 
 		});
 
 		var $table = $('#member-table');
 
 		$table.on('post-body.bs.table', function() {
-			$table.bootstrapTable('mergeCells', {
-				index : 0,
-				field : 'type_group',
-				rowspan : 6
-			});
+		$table.bootstrapTable('mergeCells', {
+		index : 0,
+		field : 'type_group',
+		rowspan : 6
+		});
 		});
 		*/
 

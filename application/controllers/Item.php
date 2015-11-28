@@ -53,9 +53,92 @@ class Item extends CI_Controller {
             $this -> load -> view('header');
             $this -> load -> view('item_type_view2', $data);
         }else{
-             redirect('welcome');
+             redirect('item');
         }
     }
+    
+    
+    private $path_to_image_directory = 'images/fullsized/';
+    private $path_to_contents_directory = 'images/contents/';
+    
+    function do_upload()
+    {
+       if (isset($_FILES['images'])) {
+            
+            end($_FILES['images']['name']);
+            $key = $_FILES['images']['name'];
+            
+            if (preg_match('/[.](jpg)|(jpeg)|(gif)|(png)$/', $key)) {
+
+                $filename = $key;
+                $source = $_FILES['images']['tmp_name'];
+                $target = $this -> path_to_image_directory . $filename;
+
+                move_uploaded_file($source, $target);
+
+                $newFileName = $this -> createThumbnail($filename, 1000);
+                
+                
+                //Insert image table
+                
+                $columns = array(
+                    'name' => $_POST['itemName'],
+                    'group_id' => '1',
+                    'desc'=> $_POST['desc'],
+                    'year'=> $_POST['year'],
+                    'picture1' => $newFileName
+                );
+                
+                $this->item_type_model->add_item_type_main($columns);
+                
+                redirect('item');
+            }
+        }
+    }
+
+
+    function createThumbnail($filename, $width) {
+        $originalFile = $this -> path_to_image_directory . $filename;
+
+        if (preg_match('/[.](jpg)|(jpeg)$/', $filename)) {
+            $im = imagecreatefromjpeg($originalFile);
+        } else if (preg_match('/[.](gif)$/', $filename)) {
+            $im = imagecreatefromgif($originalFile);
+        } else if (preg_match('/[.](png)$/', $filename)) {
+            $im = imagecreatefrompng($originalFile);
+        }
+
+        $ox = imagesx($im);
+        $oy = imagesy($im);
+
+        $nx = $width;
+        $ny = floor($oy * ($width / $ox));
+
+        $nm = imagecreatetruecolor($nx, $ny);
+
+        imagecopyresized($nm, $im, 0, 0, 0, 0, $nx, $ny, $ox, $oy);
+
+        if (!file_exists($this -> path_to_contents_directory)) {
+            if (!mkdir($this -> path_to_contents_directory)) {
+                die("There was a problem. Please try again!");
+            }
+        }
+
+        $newFileName = date('YmdHis').'.jpg';
+
+        imagejpeg($nm, $this -> path_to_contents_directory . $newFileName);
+        
+        //Remove original file
+        if (file_exists($originalFile)) {
+            unlink($originalFile);
+        }
+        
+        $tn = $this -> path_to_contents_directory . $newFileName;
+        return $tn;
+    }
+    
+    
+    
 
     public function parallax() {
         $data = array();
